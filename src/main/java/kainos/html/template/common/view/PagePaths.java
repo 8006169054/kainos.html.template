@@ -12,7 +12,7 @@ public class PagePaths {
 
 	public static Map<String, PageInfo> links = new HashMap<>();
 	static {
-		PagePaths.links.put("/HOME", PageInfo.builder().linkPath("/home").auth(true).build());
+//		PagePaths.links.put("/HOME", PageInfo.builder().linkPath("/home").auth(true).build());
 	}
 	
 	@Data

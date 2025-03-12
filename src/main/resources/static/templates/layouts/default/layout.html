@@ -2,19 +2,19 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <!--공통 JS / CSS 영역을 관리하는 환경 영역-->
-<head th:replace="common/fragments/config :: ConfigFragment" />
+<head th:replace="layouts/common/config :: ConfigFragment" />
 <body>
 	<div id="app">
 	    <div class="main-wrapper">
 			<!--Header 영역을 참조합니다.-->
-			<header th:replace="common/fragments/header :: HeaderFragment"></header>
-			<th:block th:replace="common/fragments/sidebar :: SidebarFragment"></th:block>
+			<header th:replace="layouts/default/header :: HeaderFragment"></header>
+			<th:block th:replace="layouts/common/sidebar :: SidebarFragment"></th:block>
 			
 			<!--Content 내용 영역을 참조합니다-->
 			<th:block layout:fragment="Content"></th:block>
 			
 			<!--Footer 영역을 참조합니다.-->
-			<footer th:replace="common/fragments/footer :: FooterFragment"></footer>
+			<footer th:replace="layouts/common/footer :: FooterFragment"></footer>
 		</div>
 	</div>
 </body>
