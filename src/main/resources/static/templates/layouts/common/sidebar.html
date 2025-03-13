@@ -14,7 +14,7 @@
 	          <a href="#" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Dashboard</span></a>
 	          <ul class="dropdown-menu">
 	            <li id="A01"><a class="nav-link" href='javascript:locationHref("/view/home", "A,01")'>General Dashboard</a></li>
-	            <li id="A02"><a class="nav-link" href='javascript:locationHref("/view/home", "A,02")'>Ecommerce Dashboard</a></li>
+	            <li id="A02"><a class="nav-link" href='javascript:locationHref("/view/home-0", "A,02")'>Ecommerce Dashboard</a></li>
 	          </ul>
 	        </li>
 	        <li class="menu-header">Starter</li>
@@ -53,7 +53,7 @@
 	          </ul>
 	        </li>
 	        <li class="menu-header">Stisla</li>
-	        <li class="nav-item dropdown">
+	        <li id="D" class="nav-item dropdown">
 	          <a href="#" class="nav-link has-dropdown"><i class="fas fa-th-large"></i> <span>Components</span></a>
 	          <ul class="dropdown-menu">
 	            <li><a class="nav-link" href='javascript:locationHref("/view/components-article", "D,01")'>Article</a></li>
@@ -69,6 +69,7 @@
 	            <li><a class="nav-link" href='javascript:locationHref("/view/components-table", "D,11")'>Table</a></li>
 	            <li><a class="nav-link" href='javascript:locationHref("/view/components-user", "D,12")'>User</a></li>
 	            <li><a class="nav-link beep beep-sidebar" href='javascript:locationHref("/view/components-wizard", "D,13")'>Wizard</a></li>
+	            <li id="D14" ><a class="nav-link beep beep-sidebar" href='javascript:locationHref("/view/jqgrid", "D,14")'>JqGrid</a></li>
 	          </ul>
 	        </li>
 	        <li class="nav-item dropdown">
@@ -161,7 +162,6 @@
 		$("#" + menuInfo[0]).addClass("active");
 		$("#" + menuInfo[0] + menuInfo[1]).addClass("active");
 	}
-	sessionStorage.removeItem("active");
 	function locationHref(url, active){
 		sessionStorage.setItem("active", active);
 		location.replace(url);

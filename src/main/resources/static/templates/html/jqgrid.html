@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<!-- Default Layout Import-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/default/layout}" layout:fragment="Content">
+
+<script type="text/javascript">
+
+let colName = ['매출', '이월 매출', '체크박스', 'EDI & AN', 'INVOICE', 'PROFIT DATE', 'D/O RELEASE DATE', 'CNEE', 'CNEE EMAIL', '국내매출', '해외매출', 'Partner', 'Tank no.', 'POL', 'POD', 'TERMINAL CODE', 'Carrier', 'MBL NO.', 'HBL NO.', 'ETD', 'ETA', 'ATA', '비고'];
+// let colName = ['CNEE', '매출', '이월 매출', '체크박스', 'EDI & AN', 'INVOICE', 'PROFIT DATE', 'D/O RELEASE DATE', 'CNEE EMAIL', '국내매출', '해외매출', 'Partner', 'Tank no.', 'POL', 'POD', 'TERMINAL CODE', 'Carrier', 'MBL NO.', 'HBL NO.', 'ETD', 'ETA', 'ATA', '비고'];
+$(document).ready(function () {
+// 	, cellattr: arrtSetting
+$("#list").jqGrid({
+   	datatype: "json",
+   	colNames: colName,
+   	colModel: [
+       	{ name: 'a', index: 'a', width: 70, 	align:'center', sortable: false, editable: true, cellattr: arrtSetting, frozen:true},
+       	{ name: 'b', index: 'b', width: 100, 	align:'center', sortable: false, editable: true, cellattr: arrtSetting, frozen: true},
+       	{ name: 'c', index: 'c', width: 80, 	align:'center', sortable: false, formatter: 'checkbox',  editoptions:{value:'1:0'}, frozen: true },
+       	{ name: 'd', index: 'd', width: 100, 	align:'center', sortable: false, frozen: true},
+    	{ name: 'e', index: 'e', width: 80, 	align:'center', sortable: false, frozen: true},
+    	{ name: 'f', index: 'f', width: 120, 	align:'center', sortable: false, frozen: true},
+    	{ name: 'g', index: 'g', width: 150, 	align:'center', sortable: false},
+    	{ name: 'h', index: 'h', width: 120, 	align:'center', sortable: false, cellattr: arrtSetting},
+    	{ name: 'i', index: 'i', width: 150, 	align:'center', sortable: false},
+    	{ name: 'j', index: 'j', width: 100, 	align:'center', sortable: false},
+    	{ name: 'k', index: 'k', width: 100, 	align:'center', sortable: false},
+    	{ name: 'l', index: 'l', width: 100, 	align:'center', sortable: false},
+    	{ name: 'm', index: 'm', width: 120, 	align:'center', sortable: false},
+    	{ name: 'n', index: 'n', width: 100, 	align:'center', sortable: false},
+    	{ name: 'o', index: 'o', width: 100, 	align:'center', sortable: false},
+    	{ name: 'p', index: 'p', width: 140, 	align:'center', sortable: false},
+    	{ name: 'q', index: 'q', width: 100, 	align:'center', sortable: false},
+    	{ name: 'r', index: 'r', width: 140, 	align:'center', sortable: false},
+    	{ name: 's', index: 's', width: 140, 	align:'center', sortable: false},
+    	{ name: 't', index: 't', width: 100, 	align:'center', sortable: false, cellattr: arrtSetting},
+    	{ name: 'u', index: 'u', width: 100, 	align:'center', sortable: false},
+    	{ name: 'v', index: 'v', width: 100, 	align:'center', sortable: false},
+       	{ name: 'w', index: 'w', width: 250, 	align:'center', sortable: false, cellattr: arrtSetting}
+   	],
+	height: 290, 
+	width: '100%',
+    viewrecords : false,
+   	loadonce: true,
+//     cellEdit : true,
+//     cellsubmit : 'clientArray',
+// 	autoencode: true,
+// 	altrows: false,
+	  autowidth:true,    // jQgrid width 자동100% 채워지게
+      shrinkToFit:false,  // width를 자동설정 해주는 기능
+	emptyrecords:'데이터가 없습니다.'
+});
+
+
+
+});
+
+const offcanvas = async () => {
+		$("#list").clearGridData();
+		let response = await requestApi('GET', '/open/rowspan');
+		for ( var i = 0 ; i <= response.length ; i++ ) {
+			$("#list").addRowData(i+1,response[i]);
+		}
+		$("#list").jqGrid('setFrozenColumns');
+		$("#list").jqGrid('destroyFrozenColumns');
+		$("#list").jqGrid('setColProp','invdate', {frozen:true});
+		$("#list").jqGrid('setFrozenColumns');
+		$("#list").trigger('reloadGrid', [{current:true}]);
+		
+		
+		var $grid = $("#list"),
+        newWidth = $grid.closest(".ui-jqgrid").parent().width();
+        $grid.jqGrid("setGridWidth", '100%', true);
+        
+	
+};
+
+$(window).on('resize.jqGrid', function () {    
+	console.log('111');
+	$("#list").jqGrid( 'setGridWidth', $(".table-responsive").width() );
+});
+
+gridaaaa = function () {
+	let width = $(".table-responsive").width();
+    console.log('>>>>>>>>>>>>>>>>', width);
+    $("#list").jqGrid( 'setGridWidth', width);
+};
+
+arrtSetting = function (rowId, val, rawObject, cm) {
+    var attr = rawObject.attr[cm.name], result;
+    if (attr.rowspan) {
+        result = ' rowspan=' + '"' + attr.rowspan + '"';
+    } else if (attr.display == 'none') {
+        result = ' style="display:' + attr.display + '"';
+    }
+    return result;
+};
+
+</script>
+
+
+<div class="main-content">
+	<section class="section">
+		<div class="section-header">
+			<h1>Blank Page</h1>
+		</div>
+
+		<div class="section-body">
+			<div class="row">
+				<div class="col-12 col-md-12 col-lg-12">
+					<div class="card">
+						<div class="card-header">
+							<h4>Input Text</h4>
+						</div>
+						<div class="card-body p-0">
+							<div class="table-responsive" style="overflow : hidden">
+								<table id="list"></table>
+							</div>
+							<button type="button" id="button-addon2" onclick="offcanvas()">추가</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</div>
+
+</html>
