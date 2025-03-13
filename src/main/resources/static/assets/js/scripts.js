@@ -148,7 +148,6 @@ $(function() {
 
   var toggle_sidebar_mini = function(mini) {
     let body = $('body');
-
     if(!mini) {
       body.removeClass('sidebar-mini');
       $(".main-sidebar").css({
@@ -162,6 +161,13 @@ $(function() {
       $(".main-sidebar .sidebar-menu > li > a").removeAttr('data-toggle');
       $(".main-sidebar .sidebar-menu > li > a").removeAttr('data-original-title');
       $(".main-sidebar .sidebar-menu > li > a").removeAttr('title');
+      
+      $(".main-sidebar .sidebar-menu > li").each(function() {
+        let me = $(this);
+        if(me.find('.active').length){
+			me.find('> .dropdown-menu').show();
+		}
+      });
     }else{
       body.addClass('sidebar-mini');
       body.removeClass('sidebar-show');

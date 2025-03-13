@@ -2469,6 +2469,7 @@ $.fn.jqGrid = function( pin ) {
 				if(forceFrozen === undefined) {
 					forceFrozen = true;
 				}
+
 				if(this.resizing) {
 					var idx = this.resizing.idx,
 					nw = this.headers[idx].newWidth || this.headers[idx].width;
@@ -2490,6 +2491,7 @@ $.fn.jqGrid = function( pin ) {
 						if(this.hrheaders.length>0) {this.hrheaders[idx+p.nv].style.width = nw+"px";}
 						p.colModel[idx+p.nv].width = nw;
 					} else {
+
 						p.tblwidth = this.newWidth || p.tblwidth;
 						$(this.bDiv).find('table').first().css("width",p.tblwidth+"px");
 						$(this.hDiv).find('table').first().css("width",p.tblwidth+"px");
@@ -2700,7 +2702,7 @@ $.fn.jqGrid = function( pin ) {
 
 		$(gv).insertBefore(this);
 		$(this).appendTo(gv);
-
+		
 		var eg = $("<div "+ getstyle(stylemodule, 'entrieBox', false, 'ui-jqgrid') +"></div>");
 		$(eg).attr({"id" : "gbox_"+this.id,"dir":dir}).insertBefore(gv);
 		$(gv).attr("id","gview_"+this.id).appendTo(eg);
@@ -4620,7 +4622,12 @@ $.fn.jqGrid = function( pin ) {
 			if(isNaN(ts.p.width)) {
 				ts.p.width  = initwidth + ((ts.p.shrinkToFit ===false && !isNaN(ts.p.height)) ? scw : 0);
 			}
+			
 			grid.width = parseInt(ts.p.width,10);
+			//정인선
+			if (typeof pin.width === 'string' || pin.width instanceof String)
+				grid.width = pin.width;
+			
 			ts.p.tblwidth = initwidth;
 			if(ts.p.shrinkToFit ===false && ts.p.forceFit === true) {ts.p.forceFit=false;}
 			if(ts.p.shrinkToFit===true && vc > 0) {
@@ -8241,6 +8248,7 @@ $.jgrid.extend({
 		} catch (cls) {
 			ret = "";
 		}
+
 		return ret;
 	},
 	resizeGrid : function (timeout, width, height, refreshfrozen) {
