@@ -7,21 +7,19 @@
 <script type="text/javascript">
 
 let colName = ['매출', '이월 매출', '체크박스', 'EDI & AN', 'INVOICE', 'PROFIT DATE', 'D/O RELEASE DATE', 'CNEE', 'CNEE EMAIL', '국내매출', '해외매출', 'Partner', 'Tank no.', 'POL', 'POD', 'TERMINAL CODE', 'Carrier', 'MBL NO.', 'HBL NO.', 'ETD', 'ETA', 'ATA', '비고'];
-// let colName = ['CNEE', '매출', '이월 매출', '체크박스', 'EDI & AN', 'INVOICE', 'PROFIT DATE', 'D/O RELEASE DATE', 'CNEE EMAIL', '국내매출', '해외매출', 'Partner', 'Tank no.', 'POL', 'POD', 'TERMINAL CODE', 'Carrier', 'MBL NO.', 'HBL NO.', 'ETD', 'ETA', 'ATA', '비고'];
 $(document).ready(function () {
-// 	, cellattr: arrtSetting
 $("#list").jqGrid({
    	datatype: "json",
    	colNames: colName,
    	colModel: [
-       	{ name: 'a', index: 'a', width: 70, 	align:'center', sortable: false, editable: true, rowspan: true, frozen:true},
-       	{ name: 'b', index: 'b', width: 100, 	align:'center', sortable: false, editable: true, rowspan: true, frozen: true},
-       	{ name: 'c', index: 'c', width: 80, 	align:'center', sortable: false, formatter: 'checkbox',  editoptions:{value:'1:0'}, frozen: true },
-       	{ name: 'd', index: 'd', width: 100, 	align:'center', sortable: false, frozen: true},
-    	{ name: 'e', index: 'e', width: 80, 	align:'center', sortable: false, frozen: true},
-    	{ name: 'f', index: 'f', width: 120, 	align:'center', sortable: false, frozen: true},
+       	{ name: 'a', index: 'a', width: 70, 	align:'center', sortable: false, editable: true},
+       	{ name: 'b', index: 'b', width: 100, 	align:'center', sortable: false, editable: true},
+       	{ name: 'c', index: 'c', width: 80, 	align:'center', sortable: false, formatter: 'checkbox',  editoptions:{value:'1:0'} },
+       	{ name: 'd', index: 'd', width: 100, 	align:'center', sortable: false},
+    	{ name: 'e', index: 'e', width: 80, 	align:'center', sortable: false},
+    	{ name: 'f', index: 'f', width: 120, 	align:'center', sortable: false},
     	{ name: 'g', index: 'g', width: 150, 	align:'center', sortable: false},
-    	{ name: 'h', index: 'h', width: 120, 	align:'center', sortable: false, rowspan: true},
+    	{ name: 'h', index: 'h', width: 120, 	align:'center', sortable: false},
     	{ name: 'i', index: 'i', width: 150, 	align:'center', sortable: false},
     	{ name: 'j', index: 'j', width: 100, 	align:'center', sortable: false},
     	{ name: 'k', index: 'k', width: 100, 	align:'center', sortable: false},
@@ -33,37 +31,67 @@ $("#list").jqGrid({
     	{ name: 'q', index: 'q', width: 100, 	align:'center', sortable: false},
     	{ name: 'r', index: 'r', width: 140, 	align:'center', sortable: false},
     	{ name: 's', index: 's', width: 140, 	align:'center', sortable: false},
-    	{ name: 't', index: 't', width: 100, 	align:'center', sortable: false, rowspan: true},
+    	{ name: 't', index: 't', width: 100, 	align:'center', sortable: false},
     	{ name: 'u', index: 'u', width: 100, 	align:'center', sortable: false},
     	{ name: 'v', index: 'v', width: 100, 	align:'center', sortable: false},
-       	{ name: 'w', index: 'w', width: 250, 	align:'center', sortable: false, rowspan: true}
+       	{ name: 'w', index: 'w', width: 250, 	align:'center', sortable: false}
    	],
 	height: 290, 
 	width: '100%',
     viewrecords : false,
    	loadonce: true,
-//     cellEdit : true,
-//     cellsubmit : 'clientArray',
-// 	autoencode: true,
-// 	altrows: false,
+    cellEdit : true,
 	  autowidth:true,    // jQgrid width 자동100% 채워지게
       shrinkToFit:false,  // width를 자동설정 해주는 기능
-	emptyrecords:'데이터가 없습니다.'
+	emptyrecords:'데이터가 없습니다.',
+	onCellSelect : function(rowid, iCol, cellcontent, e) {
+	    console.log(rowid, iCol, cellcontent, e);
+	},
+	ondblClickRow : function(rowid, iCol, cellcontent, e) {
+		$("#list").editCell(rowid, iCol);
+		//editCell : function (iRow,iCol, ed, event, excel)
+		//ComRowEdit('#list', rowid)
+	}
 });
 
 
-
+	$('#gbox_list').on('paste', function(e) {
+			e.stopPropagation();
+	      e.preventDefault();
+	 
+	      if(!e) e = window.event; // || event
+	      if(e.srcElement) e.target = e.srcElement;
+	     
+	      var clipboardData;
+	      if (window.clipboardData && window.clipboardData.getData)
+	      { // IE
+	         clipboardData = window.clipboardData.getData("Text");
+	      }
+	      else
+	      {
+	          var oe = (e.originalEvent || e).clipboardData;
+	          clipboardData = oe.getData("text/plain");
+	      }
+	
+	  
+		    console.log('aaaaaaaaaaaa', clipboardData.split("	"));
+	});
 });
 
 const offcanvas = async () => {
-	$("#list").clearGridData();
-	let response = await requestApi('GET', '/open/rowspan');
-	for ( var i = 0 ; i <= response.length ; i++ ) {
-		$("#list").addRowData(i+1,response[i]);
-	}
-	$("#list").jqGrid('setFrozenColumns'); ///셀고정
+	var rowId = $("#list").getGridParam("reccount"); 
+	$("#list").jqGrid("addRowData", rowId+1, {}, 'last'); 
+	
+	
+// 	$("#list").addEventListener("paste", (event) => {
+//   	  const items = (event.clipboardData || window.clipboardData).items;
+//   		console.log(items);
+//   	});
 };
 
+
+
+		
 </script>
 
 
@@ -92,5 +120,5 @@ const offcanvas = async () => {
 		</div>
 	</section>
 </div>
-
+<script src="/js/comminGrid.js"></script>
 </html>

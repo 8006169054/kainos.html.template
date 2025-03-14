@@ -2749,6 +2749,30 @@ $.fn.jqGrid = function( pin ) {
 						result += "\"";
 					}
 				}
+			// 정인선 신규추가
+			} else if (cm.rowspan != undefined && cm.rowspan === true) {
+				var attr = rawObject.attr[cm.name], result;
+				if (attr.rowspan) {
+					celp = ' rowspan=' + '"' + attr.rowspan + '"';
+				} else if (attr.display == 'none') {
+					celp = ' style="display:' + attr.display + '"';
+				}
+				if(celp && typeof celp === "string") {
+					if(celp.indexOf('title') > -1) { cm.title=false;}
+					if(celp.indexOf('class') > -1) { clas = undefined;}
+					celp = String(celp).replace(/\s+\=/g, '=');
+					acp = celp.split("style=");
+
+					if(acp.length === 2 ) {
+						acp[1] =  $.jgrid.trim(acp[1]);
+						if(acp[1].indexOf("'") === 0 || acp[1].indexOf('"') === 0) {
+							acp[1] = acp[1].substring(1);
+						}
+						result += acp[1].replace(/'/gi,'"');
+					} else {
+						result += "\"";
+					}
+				}
 			}
 			if(!acp.length ) { 
 				acp[0] = ""; 
@@ -8513,6 +8537,7 @@ $.jgrid.extend({
 $.jgrid.extend({
 	editCell : function (iRow,iCol, ed, event, excel){
 		return this.each(function (){
+			console.log(iRow,iCol, ed, event, excel);
 			var $t = this, nm, tmp,cc, cm,
 			highlight = $(this).jqGrid('getStyleUI',$t.p.styleUI+'.common','highlight', true),
 			disabled = $(this).jqGrid('getStyleUI',$t.p.styleUI+'.common','disabled', true),			
