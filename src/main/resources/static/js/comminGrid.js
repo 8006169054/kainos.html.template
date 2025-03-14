@@ -1,3 +1,17 @@
+var selectGridData = {	gridname : '',	rowid : '',	iCol: ''};
+
+/**
+ * 선택된 그리드 정보 jquery.jqGrid.js 호출 - editCell : function (iRow,iCol, ed, event, excel){
+ */
+function ComSelectGridData(gridname, rowid, iCol){
+	selectGridData.gridname = gridname;
+	selectGridData.rowid = rowid;
+	selectGridData.iCol = iCol;
+	console.log(selectGridData);
+}
+
+
+// ========================================= 기존 
 var cellEditRow;
 
 /**

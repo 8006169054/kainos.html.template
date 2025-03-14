@@ -4017,6 +4017,27 @@ $.fn.jqGrid = function( pin ) {
 			$(ts).triggerHandler("jqGridGridComplete");
 			if($.jgrid.isFunction(ts.p.gridComplete)) {ts.p.gridComplete.call(ts);}
 			$(ts).triggerHandler("jqGridAfterGridComplete");
+			
+			// 정인선 복사 붙여넣기 이벤트 추가
+			$('#gbox_' + ts.p.id).on('paste', function(e) {
+				e.stopPropagation();
+				e.preventDefault();
+	 
+				if(!e) e = window.event; // || event
+				if(e.srcElement) e.target = e.srcElement;
+	     
+				var clipboardData;
+				if (window.clipboardData && window.clipboardData.getData){ // IE
+					clipboardData = window.clipboardData.getData("Text");
+				}else{
+					var oe = (e.originalEvent || e).clipboardData;
+					clipboardData = oe.getData("text/plain");
+				}
+				clipboardData = clipboardData.split("	");
+				for ( var i = 0 ; i < clipboardData.length ; i++ ) {
+					$("#" + selectGridData.gridname).setCell(selectGridData.rowid, (selectGridData.iCol+i), clipboardData[i]);
+				}
+			}); 
 		},
 		beginReq = function() {
 			ts.grid.hDiv.loading = true;
@@ -5828,6 +5849,7 @@ $.fn.jqGrid = function( pin ) {
 		}
 		$(ts).before(grid.hDiv).on({
 			'click': function(e) {
+				
 				td = e.target;
 				ptr = $(td,ts.rows).closest("tr.jqgrow");
 				if($(ptr).length === 0 || ptr[0].className.indexOf( disabled ) > -1 || ($(td,ts).closest("table.ui-jqgrid-btable").attr('id') || '').replace("_frozen","") !== ts.id ) {
@@ -8537,7 +8559,6 @@ $.jgrid.extend({
 $.jgrid.extend({
 	editCell : function (iRow,iCol, ed, event, excel){
 		return this.each(function (){
-			console.log(iRow,iCol, ed, event, excel);
 			var $t = this, nm, tmp,cc, cm,
 			highlight = $(this).jqGrid('getStyleUI',$t.p.styleUI+'.common','highlight', true),
 			disabled = $(this).jqGrid('getStyleUI',$t.p.styleUI+'.common','disabled', true),			
@@ -8579,6 +8600,9 @@ $.jgrid.extend({
 			}
 			cc.addClass("edit-cell " + highlight);
 			$($t.rows[iRow]).addClass("selected-row " + hover);
+			
+			//정인선
+			ComSelectGridData($t.p.id,iRow,iCol);
 			if (cm.editable===true && ed===true && !cc.hasClass("not-editable-cell") && (!$.jgrid.isFunction($t.p.isCellEditable) || $t.p.isCellEditable.call($t,nm,iRow,iCol))) {
 				try {
 					tmp =  $.unformat.call($t,cc,{rowId: $t.rows[iRow].id, colModel:cm},iCol);
