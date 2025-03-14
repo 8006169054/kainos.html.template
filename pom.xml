@@ -177,20 +177,26 @@
 			<artifactId>p6spy-spring-boot-starter</artifactId>
 			<version>1.9.0</version>
 		</dependency>
-		<dependency>
-			<groupId>com</groupId>
-			<artifactId>kainos_framework_core</artifactId>
-			<version>20250228</version>
-		</dependency>
-<!--		<dependency>-->
-<!--			<groupId>com</groupId>-->
-<!--			<artifactId>kainos_framework_data_querydsl</artifactId>-->
-<!--			<version>20241101</version>-->
-<!--		</dependency>-->
+		<!--		<dependency>-->
+		<!--			<groupId>com</groupId>-->
+		<!--			<artifactId>kainos_framework_core</artifactId>-->
+		<!--			<version>20250228</version>-->
+		<!--		</dependency>-->
+		<!--		<dependency>-->
+		<!--			<groupId>com</groupId>-->
+		<!--			<artifactId>kainos_framework_data_querydsl</artifactId>-->
+		<!--			<version>20241101</version>-->
+		<!--		</dependency>-->
 		<dependency>
 			<groupId>com</groupId>
 			<artifactId>kainos_framework_utils</artifactId>
 			<version>20240521</version>
+		</dependency>
+
+		<dependency>
+			<groupId>kainos.framework</groupId>
+			<artifactId>kainos.framework.core</artifactId>
+			<version>20250314</version>
 		</dependency>
 	</dependencies>
 
@@ -228,6 +234,10 @@
 			<id>local-repository</id>
 			<name>local repository</name>
 			<url>file://${project.basedir}/libs</url>
+		</repository>
+		<repository>
+			<id>gitlab-maven</id>
+			<url>https://awsgit.hmm21.com/api/v4/projects/61/packages/maven</url>
 		</repository>
 	</repositories>
 

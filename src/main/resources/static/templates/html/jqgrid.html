@@ -58,10 +58,14 @@ $("#list").jqGrid({
 const offcanvas = async () => {
 	$("#list").clearGridData();
 	let response = await requestApi('GET', '/open/rowspan');
-	for ( var i = 0 ; i <= response.length ; i++ ) {
-		$("#list").addRowData(i+1,response[i]);
+	for ( var i = 0 ; i <= response.data.length ; i++ ) {
+		$("#list").addRowData(i+1,response.data[i]);
 	}
 	$("#list").jqGrid('setFrozenColumns'); ///셀고정
+};
+
+const excelDown = async (id) => {
+		
 };
 
 </script>
@@ -85,6 +89,7 @@ const offcanvas = async () => {
 								<table id="list"></table>
 							</div>
 							<button type="button" id="button-addon2" onclick="offcanvas()">추가</button>
+							<button type="button" id="button-addon2" onclick="excelDown('list')">로컬엑셀다움</button>
 						</div>
 					</div>
 				</div>

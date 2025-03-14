@@ -1,5 +1,7 @@
 package kainos.html.template.apps.rowspan.dto;
 
+import kainos.framework.core.support.jqgrid.annotation.GridRowSpan;
+import kainos.framework.core.support.jqgrid.dto.RowSpan;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -52,7 +54,7 @@ public class RowSpanDto {
 	private String y;
 	private String z;
 	@Builder.Default
-	private RowSpanOtion attr = RowSpanOtion.builder().build();
+	private RowSpanOtion rowspan = RowSpanOtion.builder().build();
 	
 	@Data
 	@Builder

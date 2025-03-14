@@ -2751,7 +2751,8 @@ $.fn.jqGrid = function( pin ) {
 				}
 			// 정인선 신규추가
 			} else if (cm.rowspan != undefined && cm.rowspan === true) {
-				var attr = rawObject.attr[cm.name], result;
+				console.log(rawObject);
+				var attr = rawObject.rowspan[cm.name], result;
 				if (attr.rowspan) {
 					celp = ' rowspan=' + '"' + attr.rowspan + '"';
 				} else if (attr.display == 'none') {
@@ -4038,6 +4039,11 @@ $.fn.jqGrid = function( pin ) {
 					$("#" + selectGridData.gridname).setCell(selectGridData.rowid, (selectGridData.iCol+i), clipboardData[i]);
 				}
 			}); 
+			/*
+			$('#gbox_' + ts.p.id).on('copy', function(e) {
+				
+			});
+			*/		
 		},
 		beginReq = function() {
 			ts.grid.hDiv.loading = true;

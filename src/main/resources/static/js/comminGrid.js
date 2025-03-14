@@ -7,7 +7,6 @@ function ComSelectGridData(gridname, rowid, iCol){
 	selectGridData.gridname = gridname;
 	selectGridData.rowid = rowid;
 	selectGridData.iCol = iCol;
-	console.log(selectGridData);
 }
 
 
