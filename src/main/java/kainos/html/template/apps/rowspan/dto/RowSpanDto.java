@@ -1,6 +1,6 @@
 package kainos.html.template.apps.rowspan.dto;
 
-import kainos.framework.core.support.jqgrid.annotation.GridRowSpan;
+import kainos.framework.core.support.excel.annotations.Field;
 import kainos.framework.core.support.jqgrid.dto.RowSpan;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,46 +13,52 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RowSpanDto {
 
-	@GridRowSpan(merge = true)
+	@Field(value = "A", merge = true)
 	private String a;
-	@GridRowSpan(merge = true)
+	@Field(value = "B", merge = true)
 	private String b;
-	@GridRowSpan(merge = true)
+	@Field("C")
 	private String c;
-	@GridRowSpan(merge = true)
+	@Field("D")
 	private String d;
-	@GridRowSpan(merge = true)
+	@Field("E")
 	private String e;
-	@GridRowSpan(merge = true)
+	@Field("F")
 	private String f;
-	@GridRowSpan(merge = true)
+	@Field("G")
 	private String g;
-	@GridRowSpan(mergeOrder = 0, merge = true)
+	@Field(value = "H", mergeOrder = 0, merge = true)
 	private String h;
-	@GridRowSpan(merge = true)
+	@Field("I")
 	private String i;
-	@GridRowSpan(merge = true)
+	@Field("J")
 	private String j;
-	@GridRowSpan(merge = true)
+	@Field("K")
 	private String k;
+	@Field("L")
 	private String l;
-	@GridRowSpan(merge = true)
+	@Field("M")
 	private String m;
+	@Field("N")
 	private String n;
+	@Field("O")
 	private String o;
+	@Field("P")
 	private String p;
+	@Field("Q")
 	private String q;
+	@Field("R")
 	private String r;
+	@Field("S")
 	private String s;
-	@GridRowSpan(mergeOrder = 1, merge = true)
+	@Field(value = "T", mergeOrder = 1, merge = true)
 	private String t;
+	@Field("U")
 	private String u;
+	@Field("V")
 	private String v;
-	@GridRowSpan(merge = true)
+	@Field(value = "W", merge = true)
 	private String w;
-	private String x;
-	private String y;
-	private String z;
 	@Builder.Default
 	private RowSpanOtion rowspan = RowSpanOtion.builder().build();
 	
@@ -66,53 +72,11 @@ public class RowSpanDto {
 		@Builder.Default
 		private RowSpan b = RowSpan.builder().build();
 		@Builder.Default
-		private RowSpan c = RowSpan.builder().build();
-		@Builder.Default
-		private RowSpan d = RowSpan.builder().build();
-		@Builder.Default
-		private RowSpan e = RowSpan.builder().build();
-		@Builder.Default
-		private RowSpan f = RowSpan.builder().build();
-		@Builder.Default
-		private RowSpan g = RowSpan.builder().build();
-		@Builder.Default
 		private RowSpan h = RowSpan.builder().build();
-		@Builder.Default
-		private RowSpan i = RowSpan.builder().build();
-		@Builder.Default
-		private RowSpan j = RowSpan.builder().build();
-		@Builder.Default
-		private RowSpan k = RowSpan.builder().build();
-		@Builder.Default
-		private RowSpan l = RowSpan.builder().build();
-		@Builder.Default
-		private RowSpan m = RowSpan.builder().build();
-		@Builder.Default
-		private RowSpan n = RowSpan.builder().build();
-		@Builder.Default
-		private RowSpan o = RowSpan.builder().build();
-		@Builder.Default
-		private RowSpan p = RowSpan.builder().build();
-		@Builder.Default
-		private RowSpan q = RowSpan.builder().build();
-		@Builder.Default
-		private RowSpan r = RowSpan.builder().build();
-		@Builder.Default
-		private RowSpan s = RowSpan.builder().build();
 		@Builder.Default
 		private RowSpan t = RowSpan.builder().build();
 		@Builder.Default
-		private RowSpan u = RowSpan.builder().build();
-		@Builder.Default
-		private RowSpan v = RowSpan.builder().build();
-		@Builder.Default
 		private RowSpan w = RowSpan.builder().build();
-		@Builder.Default
-		private RowSpan x = RowSpan.builder().build();
-		@Builder.Default
-		private RowSpan y = RowSpan.builder().build();
-		@Builder.Default
-		private RowSpan z = RowSpan.builder().build();
 	};
 	
 }

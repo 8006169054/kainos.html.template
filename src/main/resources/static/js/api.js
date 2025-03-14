@@ -1,3 +1,47 @@
+requestFileDownload = async (url, params, fileName) => {
+//    let token = getStorageString(AccessToken);
+//    let headers = { Authorization: `Bearer ${token}` };
+    let status = null;
+    url = `${url}?${new URLSearchParams(params)}`;
+
+    return await fetch(`${url}`, {
+        method: 'GET',
+//        headers: headers,
+        cache: 'no-cache'
+    })
+        .then(function (response) {
+            status = response.status;
+            switch (response.status) {
+                case 200:
+                    return response.blob();
+
+                case 204:
+                    return undefined;
+
+                default:
+                    return response.blob();
+            }
+        })
+        .then((blob) => {
+            if (status >= 200 && status < 300) {
+                const blobURL = window.URL.createObjectURL(blob);
+                const tempLink = document.createElement('a');
+                tempLink.href = blobURL;
+                tempLink.download = fileName;
+                document.body.appendChild(tempLink);
+                tempLink.click();
+                tempLink.remove();
+            }
+        })
+        .catch(function () {
+            throw Error('excel download error');
+        });
+};
+
+
+
+
+
 /** Server API 호출 기능 */
 requestApi = async (method, url, params, option) => {
 

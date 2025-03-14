@@ -64,8 +64,8 @@ const offcanvas = async () => {
 	$("#list").jqGrid('setFrozenColumns'); ///셀고정
 };
 
-const excelDown = async (id) => {
-		
+const excelDown = async () => {
+	 await requestFileDownload('/open/exceldown', null, 'sadfasdgasdfas.xlsx');
 };
 
 </script>
