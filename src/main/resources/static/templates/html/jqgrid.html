@@ -51,8 +51,6 @@ $("#list").jqGrid({
 	emptyrecords:'데이터가 없습니다.'
 });
 
-
-
 });
 
 const offcanvas = async () => {
@@ -64,8 +62,13 @@ const offcanvas = async () => {
 	$("#list").jqGrid('setFrozenColumns'); ///셀고정
 };
 
-const excelDown = async () => {
-	 await requestFileDownload('/open/exceldown', null, 'sadfasdgasdfas.xlsx');
+const localExcelDown = async () => {
+	var fullData = $("#list").getRowData();
+	await requestFileDownload('POST', '/open/reuqestbodyexceldown', fullData, '로컬엑셀다운로드.xlsx');
+};
+
+const serverExcelDown = async () => {
+	 await requestFileDownload('GET', '/open/exceldown', null, '서버엘셀다운로드.xlsx');
 };
 
 </script>
@@ -89,7 +92,8 @@ const excelDown = async () => {
 								<table id="list"></table>
 							</div>
 							<button type="button" id="button-addon2" onclick="offcanvas()">추가</button>
-							<button type="button" id="button-addon2" onclick="excelDown('list')">로컬엑셀다움</button>
+							<button type="button" id="button-addon2" onclick="localExcelDown()">로컬엑셀다운로드</button>
+							<button type="button" id="button-addon2" onclick="serverExcelDown()">서버엑셀다운로드</button>
 						</div>
 					</div>
 				</div>

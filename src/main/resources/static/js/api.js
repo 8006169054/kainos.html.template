@@ -1,13 +1,21 @@
-requestFileDownload = async (url, params, fileName) => {
-//    let token = getStorageString(AccessToken);
-//    let headers = { Authorization: `Bearer ${token}` };
-    let status = null;
+requestFileDownload = async (method, url, params, fileName) => {
+  let headers = {
+    'Content-Type': method?.match(/(POST|PUT|PATCH)/) ? 'application/json' : 'text/plain'
+//    ,'Authorization': storage.getItem('kainos') === null ? '' : 'Bearer ' + storage.getItem('kainos')
+  };
+  let body = (method || '').match(/(POST|PUT|PATCH)/) && params ? JSON.stringify(params) : null;
+
+  if (method.match(/GET/) && (params != null && params != undefined)) {
     url = `${url}?${new URLSearchParams(params)}`;
+  }
 
     return await fetch(`${url}`, {
-        method: 'GET',
-//        headers: headers,
-        cache: 'no-cache'
+    method: method,
+    mode: 'cors',
+    headers: headers,
+    body: body,
+    cache: 'no-cache',
+    credentials: 'include'
     })
         .then(function (response) {
             status = response.status;
@@ -33,7 +41,8 @@ requestFileDownload = async (url, params, fileName) => {
                 tempLink.remove();
             }
         })
-        .catch(function () {
+        .catch(function (e) {
+			console.log(e);
             throw Error('excel download error');
         });
 };

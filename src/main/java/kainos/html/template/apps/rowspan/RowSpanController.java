@@ -1,15 +1,18 @@
 package kainos.html.template.apps.rowspan;
 
+import java.io.ByteArrayInputStream;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
-import java.io.ByteArrayInputStream;
+
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import kainos.framework.core.servlet.KainosResponseEntity;
@@ -23,6 +26,38 @@ import lombok.RequiredArgsConstructor;
 public class RowSpanController {
 
 	private final RowSpenHandler handler;
+	
+	@PostMapping(value = "/open/reuqestbodyexceldown")
+	public ResponseEntity<InputStreamResource> insertsReuqestBody(@RequestBody List<RowSpanDto> reupestBodyList) throws Exception {
+		byte[] downLoadFile = null;
+		
+		KainosExcelWriteHandler excelWriteHandler = KainosExcelWriteHandler.builder().startRowNum(1)
+				.templateFile("excel/sample-rowsanp.xlsx") // 템플릿 파일 경로
+				.build();
+
+		reupestBodyList.forEach(excelWrite -> {
+			try {
+				excelWriteHandler.writeADD(excelWrite);
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw new RuntimeException(e);
+			}
+		});
+		downLoadFile = excelWriteHandler.writeFlush();
+		
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.setContentLength(downLoadFile.length);
+        ContentDisposition contentDisposition = ContentDisposition.builder("attachment")
+                  .filename("aaaaaaaaaaa.xlsx", Charset.forName("UTF-8"))
+                  .build();
+        headers.setContentDisposition(contentDisposition);
+		
+		return ResponseEntity.ok()
+                .headers(headers)
+                .contentLength(downLoadFile.length)
+                .body(new InputStreamResource(new ByteArrayInputStream(downLoadFile)));
+	}
 	
 	@GetMapping(value = "/open/rowspan")
 	public ResponseEntity<List<RowSpanDto>> fiendCustomerOrder() throws Exception {
