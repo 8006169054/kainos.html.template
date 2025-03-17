@@ -2297,6 +2297,7 @@ $.fn.jqGrid = function( pin ) {
 			forceFit : false,
 			gridstate : "visible",
 			cellEdit: false,
+			dbcellEdit: false,
 			cellsubmit: "remote",
 			nv:0,
 			loadui: "enable",
@@ -2751,7 +2752,6 @@ $.fn.jqGrid = function( pin ) {
 				}
 			// 정인선 신규추가
 			} else if (cm.rowspan != undefined && cm.rowspan === true) {
-				console.log(rawObject);
 				var attr = rawObject.rowspan[cm.name], result;
 				if (attr.rowspan) {
 					celp = ' rowspan=' + '"' + attr.rowspan + '"';
@@ -5710,6 +5710,8 @@ $.fn.jqGrid = function( pin ) {
 			}
 			return false;
 		}).click(function(e) {
+			
+			
 			if (ts.p.disableClick) {
 				ts.p.disableClick = false;
 				return false;
@@ -5883,19 +5885,29 @@ $.fn.jqGrid = function( pin ) {
 				if (td.length > 0) {
 					ci = $.jgrid.getCellIndex(td);
 				}
+				//정인선
+				ComSelectGridData(ts.p.id ,ptr[0].rowIndex, ci);
+
 				if(ts.p.cellEdit === true && !ts.p.ariaBody) {
 					if(ts.p.multiselect && scb && cSel){
 						$(ts).jqGrid("setSelection", ri ,true,e);
 					} else if (td.length > 0) {
 						try {
-							$(ts).jqGrid("editCell", ptr[0].rowIndex, ci, true, e);
+							$(ts).jqGrid("editCell", ptr[0].rowIndex, ci, true);
 						} catch (_) {}
 					}
+					
 					return;
 				}
 				if (td.length > 0) {
 					tdHtml = $(td).closest("td,th").html();
 					$(ts).triggerHandler("jqGridCellSelect", [ri,ci,tdHtml,e]);
+					
+					// 정인선 더블클릭 수정 후 다른곳를 선택 시 저장된다.
+					if(ts.p.savedRow.length > 0){
+						$(ts).jqGrid("saveCell", ts.p.savedRow[0].id, ts.p.savedRow[0].ic);
+					}
+
 					if($.jgrid.isFunction(ts.p.onCellSelect)) {
 						ts.p.onCellSelect.call(ts,ri,ci,tdHtml,e);
 					}
@@ -8565,16 +8577,18 @@ $.jgrid.extend({
 $.jgrid.extend({
 	editCell : function (iRow,iCol, ed, event, excel){
 		return this.each(function (){
+
 			var $t = this, nm, tmp,cc, cm,
 			highlight = $(this).jqGrid('getStyleUI',$t.p.styleUI+'.common','highlight', true),
 			disabled = $(this).jqGrid('getStyleUI',$t.p.styleUI+'.common','disabled', true),			
 			hover = !$t.p.ariaBody ? $(this).jqGrid('getStyleUI',$t.p.styleUI+'.common','hover', true) : "",
 			inpclass = $(this).jqGrid('getStyleUI',$t.p.styleUI+".celledit",'inputClass', true),
 			selclass = $(this).jqGrid('getStyleUI',$t.p.styleUI+".celledit",'selectClass', true);
-
-			if (!$t.grid || $t.p.cellEdit !== true) {return;}
+			
+			// 정인선 체크해야됨 if (!$t.grid || $t.p.cellEdit !== true) {return;}
 			if ( $($t.rows[iRow]).hasClass(disabled) ) {return;}
 			iCol = parseInt(iCol,10);
+
 			// select the row that can be used for other methods
 			$t.p.selrow = $t.rows[iRow].id;
 			if (!$t.p.knv && !$t.p.ariaBody) {$($t).jqGrid("GridNav");}
@@ -8599,6 +8613,7 @@ $.jgrid.extend({
 			} catch(e) {
 				cc = $("td",$t.rows[iRow]).eq( iCol );
 			}
+
 			if(parseInt($t.p.iCol,10)>=0  && parseInt($t.p.iRow,10)>=0 && $t.p.iRowId !== undefined) {
 				var therow = $($t).jqGrid('getGridRowById', $t.p.iRowId);
 				//$("td:eq("+$t.p.iCol+")",$t.rows[$t.p.iRow]).removeClass("edit-cell " + highlight);
@@ -8606,9 +8621,7 @@ $.jgrid.extend({
 			}
 			cc.addClass("edit-cell " + highlight);
 			$($t.rows[iRow]).addClass("selected-row " + hover);
-			
-			//정인선
-			ComSelectGridData($t.p.id,iRow,iCol);
+
 			if (cm.editable===true && ed===true && !cc.hasClass("not-editable-cell") && (!$.jgrid.isFunction($t.p.isCellEditable) || $t.p.isCellEditable.call($t,nm,iRow,iCol))) {
 				try {
 					tmp =  $.unformat.call($t,cc,{rowId: $t.rows[iRow].id, colModel:cm},iCol);
@@ -8758,6 +8771,7 @@ $.jgrid.extend({
 			} else {
 				tmp = cc.html().replace(/\&#160\;/ig,'');
 				$($t).triggerHandler("jqGridCellSelect", [$t.rows[iRow].id, iCol, tmp, event]);
+				console.log(aaaaaa);
 				if ($.jgrid.isFunction($t.p.onCellSelect)) {
 					$t.p.onCellSelect.call($t, $t.rows[iRow].id, iCol, tmp, event);
 				}
@@ -8778,7 +8792,7 @@ $.jgrid.extend({
 			var fr = $t.p.savedRow.length >= 1 ? 0 : null,
 			errors = $.jgrid.getRegional(this, 'errors'),
 			edit =$.jgrid.getRegional(this, 'edit');
-			if (!$t.grid || $t.p.cellEdit !== true) {return;}
+			//if (!$t.grid || $t.p.cellEdit !== true) {return;}
 			if(fr !== null) {
 				var nmjq = $.jgrid.jqID(nm), v, v2,
 				p = $(cc).offset();
@@ -9043,7 +9057,7 @@ $.jgrid.extend({
 	restoreCell : function(iRow, iCol) {
 		return this.each(function(){
 			var $t= this, fr = $t.p.savedRow.length >= 1 ? 0 : null;
-			if (!$t.grid || $t.p.cellEdit !== true ) {return;}
+			//if (!$t.grid || $t.p.cellEdit !== true ) {return;}
 			if(fr !== null) {
 				var trow = $($t).jqGrid("getGridRowById", $t.p.savedRow[fr].rowId),
 				cc = $('td', trow).eq( iCol );
@@ -9073,7 +9087,7 @@ $.jgrid.extend({
 		var ret;
 		this.each(function (){
 			var $t = this, nCol=false, i;
-			if (!$t.grid || $t.p.cellEdit !== true) {return;}
+			//if (!$t.grid || $t.p.cellEdit !== true) {return;}
 			// try to find next editable cell
 			for (i=iCol+1; i<$t.p.colModel.length; i++) {
 				if ( $t.p.colModel[i].editable ===true && (!$.jgrid.isFunction($t.p.isCellEditable) || $t.p.isCellEditable.call($t, $t.p.colModel[i].name,iRow,i))) {
@@ -9096,7 +9110,7 @@ $.jgrid.extend({
 		var ret;
 		this.each(function (){
 			var $t = this, nCol=false, i;
-			if (!$t.grid || $t.p.cellEdit !== true) {return false;}
+			//if (!$t.grid || $t.p.cellEdit !== true) {return false;}
 			// try to find next editable cell
 			for (i=iCol-1; i>=0; i--) {
 				if ( $t.p.colModel[i].editable ===true && (!$.jgrid.isFunction($t.p.isCellEditable) || $t.p.isCellEditable.call($t, $t.p.colModel[i].name, iRow,i))) {
@@ -9119,7 +9133,7 @@ $.jgrid.extend({
 	GridNav : function() {
 		return this.each(function () {
 			var  $t = this;
-			if (!$t.grid || $t.p.cellEdit !== true ) {return;}
+			//if (!$t.grid || $t.p.cellEdit !== true ) {return;}
 			// trick to process keydown on non input elements
 			$t.p.knv = $t.p.id + "_kn";
 			var selection = $("<div style='position:fixed;top:0px;width:1px;height:1px;' tabindex='0'><div tabindex='-1' style='width:1px;height:1px;' id='"+$t.p.knv+"'></div></div>"),
@@ -9230,7 +9244,7 @@ $.jgrid.extend({
 		if (!mthd) {mthd='all';}
 		this.each(function(){
 			var $t= this,nm;
-			if (!$t.grid || $t.p.cellEdit !== true ) {return;}
+			//if (!$t.grid || $t.p.cellEdit !== true ) {return;}
 			$($t.rows).each(function(j){
 				var res = {};
 				if ($(this).hasClass("edited")) {
