@@ -6,12 +6,13 @@
 
 <script type="text/javascript">
 
-let colName = ['매출', '이월 매출', '체크박스', 'EDI & AN', 'INVOICE', 'PROFIT DATE', 'D/O RELEASE DATE', 'CNEE', 'CNEE EMAIL', '국내매출', '해외매출', 'Partner', 'Tank no.', 'POL', 'POD', 'TERMINAL CODE', 'Carrier', 'MBL NO.', 'HBL NO.', 'ETD', 'ETA', 'ATA', '비고'];
+let colName = ['jqFlag', '매출', '이월 매출', '체크박스', 'EDI & AN', 'INVOICE', 'PROFIT DATE', 'D/O RELEASE DATE', 'CNEE', 'CNEE EMAIL', '국내매출', '해외매출', 'Partner', 'Tank no.', 'POL', 'POD', 'TERMINAL CODE', 'Carrier', 'MBL NO.', 'HBL NO.', 'ETD', 'ETA', 'ATA', '비고'];
 $(document).ready(function () {
 	$("#list").jqGrid({
 	   	datatype: "json",
 	   	colNames: colName,
 	   	colModel: [
+	   		{ name: 'jqFlag', index: 'jqFlag', width: 70, 	align:'center'},
 	       	{ name: 'a', index: 'a', width: 70, 	align:'center', sortable: false, editable: true},
 	       	{ name: 'b', index: 'b', width: 100, 	align:'center', sortable: false, editable: true},
 	       	{ name: 'c', index: 'c', width: 80, 	align:'center', sortable: false, formatter: 'checkbox',  editoptions:{value:'1:0'} },

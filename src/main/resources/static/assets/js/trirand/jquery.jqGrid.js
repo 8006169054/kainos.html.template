@@ -2781,7 +2781,7 @@ $.fn.jqGrid = function( pin ) {
 				acp[0] = ""; 
 			}
 
-			result += (clas !== undefined ? (" class=\""+clas+"\"") :"") + ((cm.title && tv) ? (" title=\""+$.jgrid.stripHtml(tv)+"\"") :"") + " kai-data=\""+$.jgrid.stripHtml(tv)+"\"";
+			result += (clas !== undefined ? (" class=\""+clas+"\"") :"") + ((cm.title && tv) ? (" title=\""+$.jgrid.stripHtml(tv)+"\"") :"") + " jq-data=\""+$.jgrid.stripHtml(tv)+"\"";
 			result += " aria-describedby=\""+ts.p.id+"_"+nm+"\"";
 			return result + acp[0];
 		},
@@ -6755,6 +6755,11 @@ $.jgrid.extend({
 	addRowData : function(rowid, rdata, pos, src, addclass) {
 		if($.inArray( pos, ["first", "last", "before", "after"] ) === -1) {pos = "last";}
 		var success = false, nm, row, rnc="", msc="", gi, si, ni,sind, i, v, prp="", aradd, cnm, data, cm, id;
+
+		// 정인선 신규데이터 상태값 C 추가
+		if(rdata.jqFlag === undefined || rdata.jqFlag === '')
+			rdata.jqFlag = "C";
+
 		if(rdata) {
 			if(Array.isArray(rdata)) {
 				aradd=true;
