@@ -2297,6 +2297,7 @@ $.fn.jqGrid = function( pin ) {
 			forceFit : false,
 			gridstate : "visible",
 			cellEdit: false,
+			dblEdit: false,
 			cellsubmit: "remote",
 			nv:0,
 			loadui: "enable",
@@ -2762,7 +2763,6 @@ $.fn.jqGrid = function( pin ) {
 					if(celp.indexOf('class') > -1) { clas = undefined;}
 					celp = String(celp).replace(/\s+\=/g, '=');
 					acp = celp.split("style=");
-
 					if(acp.length === 2 ) {
 						acp[1] =  $.jgrid.trim(acp[1]);
 						if(acp[1].indexOf("'") === 0 || acp[1].indexOf('"') === 0) {
@@ -2780,7 +2780,8 @@ $.fn.jqGrid = function( pin ) {
 			} else if(acp.length > 2) {
 				acp[0] = ""; 
 			}
-			result += (clas !== undefined ? (" class=\""+clas+"\"") :"") + ((cm.title && tv) ? (" title=\""+$.jgrid.stripHtml(tv)+"\"") :"");
+
+			result += (clas !== undefined ? (" class=\""+clas+"\"") :"") + ((cm.title && tv) ? (" title=\""+$.jgrid.stripHtml(tv)+"\"") :"") + " kai-data=\""+$.jgrid.stripHtml(tv)+"\"";
 			result += " aria-describedby=\""+ts.p.id+"_"+nm+"\"";
 			return result + acp[0];
 		},
@@ -6036,6 +6037,9 @@ $.fn.jqGrid = function( pin ) {
 				if($(ptr).length === 0 ){return;}
 				ri = ptr[0].rowIndex;
 				ci = $.jgrid.getCellIndex(td);
+				if(ts.p.dblEdit === true)
+					$(ts).jqGrid("editCell", ri, ci, true, e);
+				
 				var dbcr = $(ts).triggerHandler("jqGridDblClickRow", [$(ptr).attr("id"),ri,ci,e]);
 				if( !$.jgrid.isNull(dbcr) ) { return dbcr; }
 				if ($.jgrid.isFunction(ts.p.ondblClickRow)) {
