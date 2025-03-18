@@ -5918,7 +5918,16 @@ $.fn.jqGrid = function( pin ) {
 						var therow = $(ts).jqGrid('getGridRowById', ts.p.iRowId);
 						$(therow).removeClass("selected-row " + hover).find("td").eq( ts.p.iCol ).removeClass(highlight);
 					}
-					$(ts.rows[ptr[0].rowIndex].cells[ci]).addClass(highlight);
+					
+					if(e.target.children.length === 0 ) $(ts.rows[ptr[0].rowIndex].cells[ci]).addClass(highlight);
+					else {
+						for (const child of e.target.children) {
+							if($(child).prop("type") !== 'checkbox'){
+								$(ts.rows[ptr[0].rowIndex].cells[ci]).addClass(highlight);
+							}
+						}
+					}
+
 					ts.p.iCol = ci; ts.p.iRow = ptr[0].rowIndex; ts.p.iRowId = ptr[0].rowIndex;
 				}
 				if(ts.p.cellEdit === true && !ts.p.ariaBody) {
