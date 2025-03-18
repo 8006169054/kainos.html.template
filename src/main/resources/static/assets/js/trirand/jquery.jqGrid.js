@@ -5896,8 +5896,12 @@ $.fn.jqGrid = function( pin ) {
 				}
 
 				if (td.tagName === 'A' || ((td.tagName === 'INPUT' || td.tagName === 'TEXTAREA' || td.tagName === 'OPTION' || td.tagName === 'SELECT' ) &&  !scb &&  !(td.tagName === 'INPUT' && td.id.startsWith("jqs_"+ts.p.id))) )  { 
-					if($(e.target).prop("type") === 'checkbox')
-						afterSaveJqFlag(ts, ts.p.id, ptr[0].rowIndex, ts.p.basedata[ptr[0].rowIndex-1]);
+					if($(e.target).prop("type") === 'checkbox'){
+						if(ts.p.savedRow.length > 0){
+							$(ts).jqGrid("saveCell", ts.p.savedRow[0].id, ts.p.savedRow[0].ic);
+						}
+					}
+					//afterSaveJqFlag(ts, ts.p.id, ptr[0].rowIndex, ts.p.basedata[ptr[0].rowIndex-1]);
 					return; 
 				}
 				ri = ptr[0].id;
@@ -8854,7 +8858,7 @@ $.jgrid.extend({
 				tmp = $.unformat.call($t, cc, {rowId: $t.rows[iRow].id, colModel:cm}, iCol);
 				$t.p.savedRow.push( { id:iRow, ic:iCol, name:nm, v: tmp, rowId: $t.rows[iRow].id } );
 				$t.p.savedValues = {oldvalue: tmp, newvalue: over_value, indexRow : iRow};
-			}
+			}			
 			var fr = $t.p.savedRow.length >= 1 ? 0 : null,
 			errors = $.jgrid.getRegional(this, 'errors'),
 			edit =$.jgrid.getRegional(this, 'edit');
@@ -9118,10 +9122,17 @@ $.jgrid.extend({
 					$($t).jqGrid('focusBodyCell', $t.p.iRow, $t.p.iCol);
 				}
 			},0);
-			
+						
 			// 정인선 저정되고 상태값 변경을 위해 호출
-			afterSaveJqFlag($t, $t.rows[iRow].id, iRow, $t.p.basedata[iRow-1]);
+			let rowspan = $('td', trow).eq( iCol ).attr('rowspan');
+			if(rowspan === undefined) rowspan = 1;
+			let cellData = $($t).jqGrid("getCell", iRow, iCol);
+			for ( var i = 0 ; i < rowspan ; i++ ) {
+				if(i > 0)
+					$($t).jqGrid("setCell", iRow+i, iCol, cellData, false, false, true);
 				
+				afterSaveJqFlag($t, $t.rows[iRow].id, iRow+i, $t.p.basedata[(iRow+i)-1]);
+			}
 		});
 	},
 	restoreCell : function(iRow, iCol) {
