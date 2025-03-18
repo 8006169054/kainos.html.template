@@ -6787,10 +6787,7 @@ $.jgrid.extend({
 	},
 		// 정인선 신규 함수 추가
 	searchData : function(rdata, options) {
-		var t = this;
-		
-/////////// 문제 이것만 쓰면 수정내역이 안보임
-		
+		var t = this;	
 		$.each(rdata, function(index, data){
 			if(data.jqFlag === undefined || data.jqFlag === '')
 				data.jqFlag = "R";
@@ -6798,13 +6795,19 @@ $.jgrid.extend({
 			$(t).jqGrid('addRowData', index+1, data);
 		});
 		
-		
 		/* 셀고정 설정 */
 		if(options !== undefined && options.frozen !== undefined && options.frozen)
 			$(t).jqGrid('setFrozenColumns'); 
-		
-		Object.assign($(t)[0].p.basedata,  $(t).jqGrid('getRowData'));
 
+		Object.assign($(t)[0].p.basedata,  $(t).jqGrid('getRowData'));
+	},
+	checKedDelRow : function() {
+		var t = this;	
+		let iRows = $(t)[0].p.selarrrow;
+		
+		$.each(iRows, function(index, iRow){
+			$(t).jqGrid('setCell', iRow, 'jqFlag', 'D' );
+		});
 	},
 	addRowData : function(rowid, rdata, pos, src, addclass) {
 		if($.inArray( pos, ["first", "last", "before", "after"] ) === -1) {pos = "last";}

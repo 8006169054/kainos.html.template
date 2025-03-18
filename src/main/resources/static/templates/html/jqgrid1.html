@@ -52,6 +52,50 @@ $(document).ready(function () {
 		}
 	});
 
+	$("#list1").jqGrid({
+	   	datatype: "json",
+	   	colNames: colName,
+	   	colModel: [
+	   		{ name: 'jqFlag', width: 70, 	align:'center'},
+	       	{ name: 'a', width: 70, 	align:'center', editable: true},
+	       	{ name: 'b', width: 100, 	align:'center', editable: true},
+	       	{ name: 'c', width: 80, 	align:'center', edittype:'checkbox', formatter: 'checkbox',  editoptions:{value:'1:0'}, editable: true},
+	       	{ name: 'd', width: 100, 	align:'center'},
+	    	{ name: 'e', width: 80, 	align:'center'},
+	    	{ name: 'f', width: 120, 	align:'center'},
+	    	{ name: 'g', width: 150, 	align:'center'},
+	    	{ name: 'h', width: 120, 	align:'center'},
+	    	{ name: 'i', width: 150, 	align:'center'},
+	    	{ name: 'j', width: 100, 	align:'center', editable: true},
+	    	{ name: 'k', width: 100, 	align:'center', editable: true},
+	    	{ name: 'l', width: 100, 	align:'center', editable: true},
+	    	{ name: 'm', width: 120, 	align:'center'},
+	    	{ name: 'n', width: 100, 	align:'center'},
+	    	{ name: 'o', width: 100, 	align:'center'},
+	    	{ name: 'p', width: 140, 	align:'center'},
+	    	{ name: 'q', width: 100, 	align:'center'},
+	    	{ name: 'r', width: 140, 	align:'center'},
+	    	{ name: 's', width: 140, 	align:'center'},
+	    	{ name: 't', width: 100, 	align:'center'},
+	    	{ name: 'u', width: 100, 	align:'center'},
+	    	{ name: 'v', width: 100, 	align:'center'},
+	       	{ name: 'w', width: 250, 	align:'center'}
+	   	],
+		height: 290, 
+		width: '100%',
+	  //cellEdit : true,
+	  dblEdit : true,
+	  //cellsubmit : 'clientArray',
+	  	multiselect: true,
+	  	
+// 	 	onCellSelect : function(rowid, iCol, cellcontent, e) {
+
+// 	 	},
+		ondblClickRow : function(rowid, iRow, iCol,	e) {
+
+		}
+	});
+	
 });
 
 const add = async () => {
@@ -76,10 +120,28 @@ const search = async () => {
 };
 
 
-const bbbbb = async () => {
-	
-	console.log(ComRowData("#list", 1))
-	
+const del = async () => {
+	$("#list").checKedDelRow();
+};
+
+
+const search1 = async () => {
+	$("#lis1t").clearGridData();
+	let response = await requestApi('GET', '/open/rowspan');
+	$("#list1").searchData(response.data, {});
+
+// 	$("#list").clearGridData();
+// 	let response = await requestApi('GET', '/open/rowspan');
+// 	for ( var i = 0 ; i <= response.data.length ; i++ ) {
+// 		$("#list").addRowData(i+1,response.data[i]);
+// 	}
+// 	$("#list").jqGrid('setFrozenColumns'); ///셀고정
+
+};
+
+
+const del1 = async () => {
+	$("#list1").delRowData();
 };
 
 </script>
@@ -104,7 +166,14 @@ const bbbbb = async () => {
 							</div>
 							<button type="button" id="button-addon2" onclick="add()">추가</button>
 							<button type="button" id="button-addon2" onclick="search()">조회</button>
-							<button type="button" id="button-addon2" onclick="bbbbb()">변경데이터 확인</button>
+							<button type="button" id="button-addon2" onclick="del()">삭제</button>
+						</div>
+						<div class="card-body p-0">
+							<div class="table-responsive" style="overflow : hidden">
+								<table id="list1"></table>
+							</div>
+							<button type="button" id="button-addon2" onclick="search1()">조회</button>
+							<button type="button" id="button-addon2" onclick="del1()">삭제</button>
 						</div>
 					</div>
 				</div>
