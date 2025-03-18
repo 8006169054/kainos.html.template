@@ -9,26 +9,26 @@ function ComSelectGridData(gridname, rowid, iCol){
 	selectGridData.iCol = iCol;
 }
 
+/**
+ * 데이터 변경 시 jqFlag 상태값 체크 로직 jquery.jqGrid.js 호출 - saveCell : function (iRow, iCol, over_value)
+ */
 function afterSaveJqFlag(grid, rowid, iRow, oRowData){
-	var iRowData = $(grid).getRowData(iRow);
-	console.log(iRowData, oRowData, iRow);
-	
-	if(_.isEqual(iRowData, oRowData)) console.log('>>>>>>>>>>>>>');
-	
-//	var trow = $(grid).jqGrid("getGridRowById", rowid);
-//	var jqFlag = rowData.jqFlag;
-//	if(jqFlag !== 'C'){
-//		$.each($('td', trow), function(iCol, td){
-//			console.log(td);
-//		});
+	var iRowData = $(grid).getRowData(iRow);	
+	let jqFlag = "R";
+	/** 조회된 데이터가 변경 시만 jqFlag 변경이 된다. */
+	if(oRowData.jqFlag === 'R' && iRowData.jqFlag !== 'D'){
+		let keys = Object.keys(oRowData);
+		$(keys).each(function(i ,key){
+			if(key !== 'jqFlag'){
+				if(iRowData[key] !== oRowData[key]) {
+					jqFlag = 'U';
+					return false;
+				}
+			}
+		});
 		
-		
-//		$.each(rowData, function(iCol, data){
-//			//console.log(i, $(td).attr('jq-data'));
-//			var td = $('td', $(trow)).eq( iCol );
-//			console.log(data, $(td).attr('jq-data'));
-//		});
-//	}
+		$(grid).setCell(iRow, 'jqFlag', jqFlag);
+	}
 }
 
 

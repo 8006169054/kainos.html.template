@@ -9094,8 +9094,8 @@ $.jgrid.extend({
 				}
 			},0);
 			
-				// 정인선 저정되고 상태값 변경을 위해 호출
-				afterSaveJqFlag($t, $t.rows[iRow].id, iRow, $t.p.basedata[iRow-1]);
+			// 정인선 저정되고 상태값 변경을 위해 호출
+			afterSaveJqFlag($t, $t.rows[iRow].id, iRow, $t.p.basedata[iRow-1]);
 				
 		});
 	},
