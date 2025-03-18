@@ -2232,7 +2232,8 @@ $.fn.jqGrid = function( pin ) {
 			selarrrow: [],
 			preserveSelection : false,
 			savedRow: [],
-			shrinkToFit: true,
+//정인선			shrinkToFit: true,
+			shrinkToFit: false,
 			xmlReader: {},
 			jsonReader: {},
 			subGrid: false,
@@ -2298,14 +2299,16 @@ $.fn.jqGrid = function( pin ) {
 			gridstate : "visible",
 			cellEdit: false,
 			dblEdit: false,
-			cellsubmit: "remote",
+			emptyrecords: '데이터가 없습니다.',
+			cellsubmit: "clientArray",
 			nv:0,
 			loadui: "enable",
 			toolbar: [false,""],
 			scroll: false,
 			deselectAfterSort : true,
 			scrollrows : false,
-			autowidth: false,
+//정인선			autowidth: false,
+			autowidth: true,
 			scrollOffset : $.jgrid.scrollbarWidth() + 3, // one extra for windows
 			cellLayout: 5,
 			subGridWidth: 20,
@@ -2329,6 +2332,7 @@ $.fn.jqGrid = function( pin ) {
 			headertitles: false,
 			scrollTimeout: 40,
 			data : [],
+			basedata : [], // 정인선 데이터 상테 체크용
 			_index : {},
 			grouping : false,
 			groupingView : {
@@ -2781,7 +2785,7 @@ $.fn.jqGrid = function( pin ) {
 				acp[0] = ""; 
 			}
 
-			result += (clas !== undefined ? (" class=\""+clas+"\"") :"") + ((cm.title && tv) ? (" title=\""+$.jgrid.stripHtml(tv)+"\"") :"") + " jq-data=\""+$.jgrid.stripHtml(tv)+"\"";
+			result += (clas !== undefined ? (" class=\""+clas+"\"") :"") + ((cm.title && tv) ? (" title=\""+$.jgrid.stripHtml(tv)+"\"") :"") + " kai-data=\""+$.jgrid.stripHtml(tv)+"\"";
 			result += " aria-describedby=\""+ts.p.id+"_"+nm+"\"";
 			return result + acp[0];
 		},
@@ -4543,7 +4547,8 @@ $.fn.jqGrid = function( pin ) {
 			*/
 		},
 		sortData = function (index, idxcol,reload,sor, obj){
-			if(!ts.p.colModel[idxcol].sortable) { return; }
+		// 정인선 sort 기본값 사용안함 변경	if(!ts.p.colModel[idxcol].sortable) { return; }
+			if(ts.p.colModel[idxcol].sortable) { return; }
 			if(ts.p.savedRow.length > 0) {return;}
 			if(!reload) {
 				if( ts.p.lastsort === idxcol && ts.p.sortname !== "" ) {
@@ -6752,14 +6757,35 @@ $.jgrid.extend({
 		});
 		return success;
 	},
+		// 정인선 신규 함수 추가
+	searchData : function(rdata, options) {
+		var t = this;
+		
+/////////// 문제 이것만 쓰면 수정내역이 안보임
+		
+		$.each(rdata, function(index, data){
+			if(data.jqFlag === undefined || data.jqFlag === '')
+				data.jqFlag = "R";
+			
+			$(t).jqGrid('addRowData', index+1, data);
+		});
+		
+		
+		/* 셀고정 설정 */
+		if(options !== undefined && options.frozen !== undefined && options.frozen)
+			$(t).jqGrid('setFrozenColumns'); 
+		
+		Object.assign($(t)[0].p.basedata,  $(t).jqGrid('getRowData'));
+
+	},
 	addRowData : function(rowid, rdata, pos, src, addclass) {
 		if($.inArray( pos, ["first", "last", "before", "after"] ) === -1) {pos = "last";}
 		var success = false, nm, row, rnc="", msc="", gi, si, ni,sind, i, v, prp="", aradd, cnm, data, cm, id;
-
+		
 		// 정인선 신규데이터 상태값 C 추가
 		if(rdata.jqFlag === undefined || rdata.jqFlag === '')
 			rdata.jqFlag = "C";
-
+		
 		if(rdata) {
 			if(Array.isArray(rdata)) {
 				aradd=true;
@@ -9067,6 +9093,10 @@ $.jgrid.extend({
 					$($t).jqGrid('focusBodyCell', $t.p.iRow, $t.p.iCol);
 				}
 			},0);
+			
+				// 정인선 저정되고 상태값 변경을 위해 호출
+				afterSaveJqFlag($t, $t.rows[iRow].id, iRow, $t.p.basedata[iRow-1]);
+				
 		});
 	},
 	restoreCell : function(iRow, iCol) {

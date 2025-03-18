@@ -97,7 +97,6 @@ requestApi = async (method, url, params, option) => {
       }
     })
     .then(function (response) {
-		console.log(6, response, responseStatus);
 		switch (!!(responseStatus >= 200 && responseStatus < 300)) {
 			case true:
 //				if(response.common.status === 'E'){

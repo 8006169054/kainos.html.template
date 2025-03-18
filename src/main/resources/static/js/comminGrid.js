@@ -9,6 +9,29 @@ function ComSelectGridData(gridname, rowid, iCol){
 	selectGridData.iCol = iCol;
 }
 
+function afterSaveJqFlag(grid, rowid, iRow, oRowData){
+	var iRowData = $(grid).getRowData(iRow);
+	console.log(iRowData, oRowData, iRow);
+	
+	if(_.isEqual(iRowData, oRowData)) console.log('>>>>>>>>>>>>>');
+	
+//	var trow = $(grid).jqGrid("getGridRowById", rowid);
+//	var jqFlag = rowData.jqFlag;
+//	if(jqFlag !== 'C'){
+//		$.each($('td', trow), function(iCol, td){
+//			console.log(td);
+//		});
+		
+		
+//		$.each(rowData, function(iCol, data){
+//			//console.log(i, $(td).attr('jq-data'));
+//			var td = $('td', $(trow)).eq( iCol );
+//			console.log(data, $(td).attr('jq-data'));
+//		});
+//	}
+}
+
+
 
 // ========================================= 기존 
 var cellEditRow;

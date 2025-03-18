@@ -12,61 +12,66 @@ $(document).ready(function () {
 	   	datatype: "json",
 	   	colNames: colName,
 	   	colModel: [
-	   		{ name: 'jqFlag', index: 'jqFlag', width: 70, 	align:'center'},
-	       	{ name: 'a', index: 'a', width: 70, 	align:'center', sortable: false, editable: true},
-	       	{ name: 'b', index: 'b', width: 100, 	align:'center', sortable: false, editable: true},
-	       	{ name: 'c', index: 'c', width: 80, 	align:'center', sortable: false, formatter: 'checkbox',  editoptions:{value:'1:0'} },
-	       	{ name: 'd', index: 'd', width: 100, 	align:'center', sortable: false},
-	    	{ name: 'e', index: 'e', width: 80, 	align:'center', sortable: false},
-	    	{ name: 'f', index: 'f', width: 120, 	align:'center', sortable: false},
-	    	{ name: 'g', index: 'g', width: 150, 	align:'center', sortable: false},
-	    	{ name: 'h', index: 'h', width: 120, 	align:'center', sortable: false},
-	    	{ name: 'i', index: 'i', width: 150, 	align:'center', sortable: false},
-	    	{ name: 'j', index: 'j', width: 100, 	align:'center', sortable: false},
-	    	{ name: 'k', index: 'k', width: 100, 	align:'center', sortable: false},
-	    	{ name: 'l', index: 'l', width: 100, 	align:'center', sortable: false},
-	    	{ name: 'm', index: 'm', width: 120, 	align:'center', sortable: false},
-	    	{ name: 'n', index: 'n', width: 100, 	align:'center', sortable: false},
-	    	{ name: 'o', index: 'o', width: 100, 	align:'center', sortable: false},
-	    	{ name: 'p', index: 'p', width: 140, 	align:'center', sortable: false},
-	    	{ name: 'q', index: 'q', width: 100, 	align:'center', sortable: false},
-	    	{ name: 'r', index: 'r', width: 140, 	align:'center', sortable: false},
-	    	{ name: 's', index: 's', width: 140, 	align:'center', sortable: false},
-	    	{ name: 't', index: 't', width: 100, 	align:'center', sortable: false},
-	    	{ name: 'u', index: 'u', width: 100, 	align:'center', sortable: false},
-	    	{ name: 'v', index: 'v', width: 100, 	align:'center', sortable: false},
-	       	{ name: 'w', index: 'w', width: 250, 	align:'center', sortable: false}
+	   		{ name: 'jqFlag', width: 70, 	align:'center'},
+	       	{ name: 'a', width: 70, 	align:'center', editable: true},
+	       	{ name: 'b', width: 100, 	align:'center', editable: true},
+	       	{ name: 'c', width: 80, 	align:'center', formatter: 'checkbox',  editoptions:{value:'1:0'} },
+	       	{ name: 'd', width: 100, 	align:'center'},
+	    	{ name: 'e', width: 80, 	align:'center'},
+	    	{ name: 'f', width: 120, 	align:'center'},
+	    	{ name: 'g', width: 150, 	align:'center'},
+	    	{ name: 'h', width: 120, 	align:'center'},
+	    	{ name: 'i', width: 150, 	align:'center'},
+	    	{ name: 'j', width: 100, 	align:'center', editable: true},
+	    	{ name: 'k', width: 100, 	align:'center', editable: true},
+	    	{ name: 'l', width: 100, 	align:'center', editable: true},
+	    	{ name: 'm', width: 120, 	align:'center'},
+	    	{ name: 'n', width: 100, 	align:'center'},
+	    	{ name: 'o', width: 100, 	align:'center'},
+	    	{ name: 'p', width: 140, 	align:'center'},
+	    	{ name: 'q', width: 100, 	align:'center'},
+	    	{ name: 'r', width: 140, 	align:'center'},
+	    	{ name: 's', width: 140, 	align:'center'},
+	    	{ name: 't', width: 100, 	align:'center'},
+	    	{ name: 'u', width: 100, 	align:'center'},
+	    	{ name: 'v', width: 100, 	align:'center'},
+	       	{ name: 'w', width: 250, 	align:'center'}
 	   	],
 		height: 290, 
 		width: '100%',
-	    viewrecords : false,
-	   	loadonce: true,
 	  //cellEdit : true,
+	  //cellsubmit : 'clientArray',
 	  	dblEdit : true,
-	     cellsubmit : 'clientArray',
-		  autowidth:true,    // jQgrid width 자동100% 채워지게
-	      shrinkToFit:false,  // width를 자동설정 해주는 기능
-		emptyrecords:'데이터가 없습니다.',
-	// 	onCellSelect : function(rowid, iCol, cellcontent, e) {
-	// 	    console.log(rowid, iCol, cellcontent, e);
-	// 	},
+	 	onCellSelect : function(rowid, iCol, cellcontent, e) {
+
+	 	},
 		ondblClickRow : function(rowid, iRow, iCol,	e) {
-			//console.log(iRow, iCol, true)
-			//$($("#list")).jqGrid("editCell", iRow, iCol, true);
-			//$("#list").editCell(rowid, iCol, true);
-			//editCell : function (iRow,iCol, ed, event, excel)
-			//ComRowEdit('#list', rowid)
+
 		}
 	});
 
 });
 
-const offcanvas = async () => {
+const add = async () => {
 	var rowId = $("#list").getGridParam("reccount"); 
 	$("#list").jqGrid("addRowData", rowId+1, {}, 'last'); 
 
 };
 		
+		
+const search = async () => {
+	$("#list").clearGridData();
+	let response = await requestApi('GET', '/open/rowspan');
+	$("#list").searchData(response.data, {});
+};
+
+
+const bbbbb = async () => {
+	
+	console.log(ComRowData("#list", 1))
+	
+};
+
 </script>
 
 
@@ -87,7 +92,9 @@ const offcanvas = async () => {
 							<div class="table-responsive" style="overflow : hidden">
 								<table id="list"></table>
 							</div>
-							<button type="button" id="button-addon2" onclick="offcanvas()">추가</button>
+							<button type="button" id="button-addon2" onclick="add()">추가</button>
+							<button type="button" id="button-addon2" onclick="search()">조회</button>
+							<button type="button" id="button-addon2" onclick="bbbbb()">변경데이터 확인</button>
 						</div>
 					</div>
 				</div>
