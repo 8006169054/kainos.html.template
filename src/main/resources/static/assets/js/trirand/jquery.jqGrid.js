@@ -2712,7 +2712,7 @@ $.fn.jqGrid = function( pin ) {
 		$(eg).attr({"id" : "gbox_"+this.id,"dir":dir}).insertBefore(gv);
 		$(gv).attr("id","gview_"+this.id).appendTo(eg);
 		$("<div "+getstyle(ts.p.styleUI+'.common','overlay', false, 'jqgrid-overlay')+ " id='lui_"+this.id+"'></div>").insertBefore(gv);
-		$("<div "+getstyle(stylemodule,'loadingBox', false, 'loading')+" id='load_"+this.id+"'>"+$.jgrid.getRegional(ts, "defaults.loadtext", this.p.loadtext)+"</div>").insertBefore(gv);
+		//정인선 로딩 이미지 제거 $("<div "+getstyle(stylemodule,'loadingBox', false, 'loading')+" id='load_"+this.id+"'>"+$.jgrid.getRegional(ts, "defaults.loadtext", this.p.loadtext)+"</div>").insertBefore(gv);
 
 		$(this).attr({role:"grid","aria-multiselectable":!!this.p.multiselect,"aria-labelledby":"gbox_"+this.id});
 
@@ -4547,8 +4547,9 @@ $.fn.jqGrid = function( pin ) {
 			*/
 		},
 		sortData = function (index, idxcol,reload,sor, obj){
-		// 정인선 sort 기본값 사용안함 변경	if(!ts.p.colModel[idxcol].sortable) { return; }
-			if(ts.p.colModel[idxcol].sortable) { return; }
+		// 정인선 sort 기본값 사용안함 변경	
+		if(!ts.p.colModel[idxcol].sortable) { return; }
+		//	if(ts.p.colModel[idxcol].sortable) { return; }
 			if(ts.p.savedRow.length > 0) {return;}
 			if(!reload) {
 				if( ts.p.lastsort === idxcol && ts.p.sortname !== "" ) {
@@ -5495,7 +5496,11 @@ $.fn.jqGrid = function( pin ) {
 			}
 			thead += "<th id='"+ts.p.id+"_" + tmpcm.name+"' role='columnheader'  scope='col' "+getstyle(stylemodule,'headerBox',false, "ui-th-column ui-th-" + dir + " " + ( tmpcm.labelClasses || "") ) +  tooltip+">";
 			idn = tmpcm.index || tmpcm.name;
-			thead += "<div class='ui-th-div' id='jqgh_"+ts.p.id+"_"+tmpcm.name+"' "+tdc+">"+ts.p.colNames[i];
+			// 정인선 해더 체크박스 style='padding-top: 7px;' 추가
+			let style = "";
+			if(tmpcm.name === 'cb') style = "style='padding-top: 7px;'";
+			thead += "<div class='ui-th-div' id='jqgh_" + ts.p.id + "_" + tmpcm.name +"' " + tdc + style + ">" +ts.p.colNames[i];
+			
 			if(!tmpcm.width)  {
 				tmpcm.width = ts.p.defaultColWidth;
 			} else {
@@ -5540,7 +5545,8 @@ $.fn.jqGrid = function( pin ) {
 						if (i>0) {
 							if(!$(this).hasClass("ui-subgrid") && !$(this).hasClass("jqgroup") && !$(this).hasClass(disabled) && !$(this).hasClass("jqfoot")){
 								$("#jqg_"+$.jgrid.jqID(ts.p.id)+"_"+$.jgrid.jqID(this.id) )[ts.p.useProp ? 'prop': 'attr']("checked",true);
-								$(this).addClass(highlight).attr("aria-selected","true");
+								// 체크박스 선택시 전체 highlight 제거 $(this).addClass(highlight).attr("aria-selected","true");
+								$(this).attr("aria-selected","true");
 								if(ts.p.preserveSelection) {
 									if(ts.p.selarrrow.indexOf(this.id) === -1) {
 										ts.p.selarrrow.push(this.id);
@@ -5641,9 +5647,14 @@ $.fn.jqGrid = function( pin ) {
 			firstr += "<td "+clcol+" role='gridcell' style='height:0px;width:"+w+"px;"+hdcol+"'></td>";
 			grid.headers[j] = { width: w, el: this };
 			sort = tmpcm.sortable;
+			/* 정인선 sort 기본 사용안한 처리
 			if( typeof sort !== 'boolean') {
 				tmpcm.sortable =  true;
 				sort=true;
+			}*/
+			if( typeof sort !== 'boolean') {
+				tmpcm.sortable =  false;
+				sort=false;
 			}
 			var nm = tmpcm.name;
 			if( !(nm === 'cb' || nm==='subgrid' || nm==='rn' || nm==='sc') ) {
@@ -5863,6 +5874,11 @@ $.fn.jqGrid = function( pin ) {
 			'click': function(e) {
 				td = e.target;
 				ptr = $(td,ts.rows).closest("tr.jqgrow");
+				if(ts.p.savedRow.length > 0){
+					if(ts.p.iRow !== ts.p.savedRow[0].id && s.p.iCol !== ts.p.savedRow[0].ic)
+						$(ts).jqGrid("saveCell", ts.p.savedRow[0].id, ts.p.savedRow[0].ic);
+				}
+					
 				if($(ptr).length === 0 || ptr[0].className.indexOf( disabled ) > -1 || ($(td,ts).closest("table.ui-jqgrid-btable").attr('id') || '').replace("_frozen","") !== ts.id ) {
 					return this;
 				}
@@ -5878,9 +5894,10 @@ $.fn.jqGrid = function( pin ) {
 				if(scb && cSel === false){
 					$(e.target).prop('checked',!$(e.target).prop('checked'));
 				}
-				if (td.tagName === 'A' || ((td.tagName === 'INPUT' || td.tagName === 'TEXTAREA' || td.tagName === 'OPTION' || td.tagName === 'SELECT' ) && 
-						!scb && 
-						!(td.tagName === 'INPUT' && td.id.startsWith("jqs_"+ts.p.id))) )  { 
+
+				if (td.tagName === 'A' || ((td.tagName === 'INPUT' || td.tagName === 'TEXTAREA' || td.tagName === 'OPTION' || td.tagName === 'SELECT' ) &&  !scb &&  !(td.tagName === 'INPUT' && td.id.startsWith("jqs_"+ts.p.id))) )  { 
+					if($(e.target).prop("type") === 'checkbox')
+						afterSaveJqFlag(ts, ts.p.id, ptr[0].rowIndex, ts.p.basedata[ptr[0].rowIndex-1]);
 					return; 
 				}
 				ri = ptr[0].id;
@@ -5905,7 +5922,7 @@ $.fn.jqGrid = function( pin ) {
 						$(ts).jqGrid("setSelection", ri ,true,e);
 					} else if (td.length > 0) {
 						try {
-							$(ts).jqGrid("editCell", ptr[0].rowIndex, ci, true);
+							$(ts).jqGrid("editCell", ptr[0].rowIndex, ci, true, e);
 						} catch (_) {}
 					}
 					
@@ -5914,12 +5931,10 @@ $.fn.jqGrid = function( pin ) {
 				if (td.length > 0) {
 					tdHtml = $(td).closest("td,th").html();
 					$(ts).triggerHandler("jqGridCellSelect", [ri,ci,tdHtml,e]);
-					
 					// 정인선 더블클릭 수정 후 다른곳를 선택 시 저장된다.
 					if(ts.p.savedRow.length > 0){
 						$(ts).jqGrid("saveCell", ts.p.savedRow[0].id, ts.p.savedRow[0].ic);
 					}
-
 					if($.jgrid.isFunction(ts.p.onCellSelect)) {
 						ts.p.onCellSelect.call(ts,ri,ci,tdHtml,e);
 					}
@@ -6415,7 +6430,7 @@ $.jgrid.extend({
 		});
 		return ids;
 	},
-	setSelection : function(selection,onsr, e, isHight) {
+	setSelection : function(selection, onsr, e, isHight) {
 		return this.each(function(){
 			var $t = this, stat,pt, ner, ia, tpsr, fid, csr, tfid,
 			getstyle = $.jgrid.getMethod("getStyleUI"),
@@ -6441,6 +6456,7 @@ $.jgrid.extend({
 					}
 				}
 			}
+			
 			if($t.p.scrollrows===true) {
 				ner = $($t).jqGrid('getGridRowById',selection).rowIndex;
 				if(ner >=0 ){
@@ -6453,7 +6469,6 @@ $.jgrid.extend({
 			if($t.p.frozenRows === true ) {
 				tfid = $t.p.id+"_fr";
 			}
-			
 			if(!$t.p.multiselect) {
 				if(tfid) {
 					$("#"+$.jgrid.jqID($t.p.selrow), "#"+$.jgrid.jqID(tfid)).removeClass(highlight);
@@ -6487,21 +6502,21 @@ $.jgrid.extend({
 				$t.p.selrow = pt.id;
 				ia = $.inArray($t.p.selrow,$t.p.selarrrow);
 				if (  ia === -1 ){
-					if(pt.className !== "ui-subgrid") { $(pt).addClass(highlight).attr("aria-selected","true");}
+					// 정인선 highlight 오류로 주석 if(pt.className !== "ui-subgrid") { $(pt).addClass(highlight).attr("aria-selected","true");}
 					stat = true;
 					$t.p.selarrrow.push($t.p.selrow);
 				} else if( ia !== -1 && e === "_sp_") { 
 					// selection preserver multiselect
-					if(pt.className !== "ui-subgrid") { $(pt).addClass(highlight).attr("aria-selected","true");}
+					// 정인선 highlight 오류로 주석 if(pt.className !== "ui-subgrid") { $(pt).addClass(highlight).attr("aria-selected","true");}
 					stat = true;					
 				} else {
-					if(pt.className !== "ui-subgrid") { $(pt).removeClass(highlight).attr("aria-selected","false");}
+					// 정인선 highlight 오류로 주석 if(pt.className !== "ui-subgrid") { $(pt).removeClass(highlight).attr("aria-selected","false");}
 					stat = false;
 					$t.p.selarrrow.splice(ia,1);
 					tpsr = $t.p.selarrrow[0];
 					$t.p.selrow = (tpsr === undefined) ? null : tpsr;
 				}
-				$("#jqg_"+$.jgrid.jqID($t.p.id)+"_"+$.jgrid.jqID(pt.id))[$t.p.useProp ? 'prop': 'attr']("checked",stat);
+				// 정인선 체크박스 선택하지 않아도 체크박스 선택이되는 부분 주석처리 $("#jqg_"+$.jgrid.jqID($t.p.id)+"_"+$.jgrid.jqID(pt.id))[$t.p.useProp ? 'prop': 'attr']("checked",stat);
 				if(fid) {
 					if(isHight) {
 						if(ia === -1) {
@@ -8617,8 +8632,13 @@ $.jgrid.extend({
 //module begin
 $.jgrid.extend({
 	editCell : function (iRow,iCol, ed, event, excel){
-		return this.each(function (){
+		for (const child of event.target.children) {
+			if($(child).prop("type") === 'checkbox'){
+				return ;
+			}
+		}
 
+		return this.each(function (){
 			var $t = this, nm, tmp,cc, cm,
 			highlight = $(this).jqGrid('getStyleUI',$t.p.styleUI+'.common','highlight', true),
 			disabled = $(this).jqGrid('getStyleUI',$t.p.styleUI+'.common','disabled', true),			
@@ -8698,6 +8718,11 @@ $.jgrid.extend({
 				cc.html("").append(elc).attr("tabindex","0");
 				$.jgrid.bindEv.call($t, elc, opt);
 				window.setTimeout(function () { $(elc).focus();},1);
+				
+				$("input, select, textarea",cc).focusout(function() {
+					$($t).jqGrid("saveCell", $t.p.savedRow[0].id, $t.p.savedRow[0].ic);
+				});
+
 				$("input, select, textarea",cc).on("keydown",function(e) {
 					var key = e.key;
 					if (e.keyCode === 27) {
@@ -19920,9 +19945,14 @@ hs=function(w,t,c){return w.each(function(){var s=this._jqm;$(t).each(function()
 	};
 	$.fn.fmatter.checkbox =function(cval, opts) {
 		var op = $.extend({},opts.checkbox), ds, checkboxVal, valtrue, valfalse, lang = Object.keys($.jgrid.regional)[0], title;
+
 		if(opts.colModel !== undefined && opts.colModel.formatoptions !== undefined) {
 			op = $.extend({},op,opts.colModel.formatoptions);
 		}
+
+		// 정인선 editable 일때 활성화 추가
+		if(opts.colModel.editable !== undefined && opts.colModel.editable) op.disabled = false;
+		
 		if(op.disabled===true) {ds = "disabled=\"disabled\"";} else {ds="";}
 		if($.fmatter.isEmpty(cval) || cval === undefined ) {cval = $.fn.fmatter.defaultFormat(cval,op);}
 		cval=String(cval);

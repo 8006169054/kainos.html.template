@@ -6,7 +6,7 @@
 
 <script type="text/javascript">
 
-let colName = ['jqFlag', '매출', '이월 매출', '체크박스', 'EDI & AN', 'INVOICE', 'PROFIT DATE', 'D/O RELEASE DATE', 'CNEE', 'CNEE EMAIL', '국내매출', '해외매출', 'Partner', 'Tank no.', 'POL', 'POD', 'TERMINAL CODE', 'Carrier', 'MBL NO.', 'HBL NO.', 'ETD', 'ETA', 'ATA', '비고'];
+let colName = ['jqFlag','매출', '이월 매출', '체크박스', 'EDI & AN', 'INVOICE', 'PROFIT DATE', 'D/O RELEASE DATE', 'CNEE', 'CNEE EMAIL', '국내매출', '해외매출', 'Partner', 'Tank no.', 'POL', 'POD', 'TERMINAL CODE', 'Carrier', 'MBL NO.', 'HBL NO.', 'ETD', 'ETA', 'ATA', '비고'];
 $(document).ready(function () {
 	$("#list").jqGrid({
 	   	datatype: "json",
@@ -15,7 +15,7 @@ $(document).ready(function () {
 	   		{ name: 'jqFlag', width: 70, 	align:'center'},
 	       	{ name: 'a', width: 70, 	align:'center', editable: true},
 	       	{ name: 'b', width: 100, 	align:'center', editable: true},
-	       	{ name: 'c', width: 80, 	align:'center', formatter: 'checkbox',  editoptions:{value:'1:0'} },
+	       	{ name: 'c', width: 80, 	align:'center', edittype:'checkbox', formatter: 'checkbox',  editoptions:{value:'1:0'}, editable: true},
 	       	{ name: 'd', width: 100, 	align:'center'},
 	    	{ name: 'e', width: 80, 	align:'center'},
 	    	{ name: 'f', width: 120, 	align:'center'},
@@ -40,11 +40,13 @@ $(document).ready(function () {
 		height: 290, 
 		width: '100%',
 	  //cellEdit : true,
+	  dblEdit : true,
 	  //cellsubmit : 'clientArray',
-	  	dblEdit : true,
-	 	onCellSelect : function(rowid, iCol, cellcontent, e) {
+	  	multiselect: true,
+	  	
+// 	 	onCellSelect : function(rowid, iCol, cellcontent, e) {
 
-	 	},
+// 	 	},
 		ondblClickRow : function(rowid, iRow, iCol,	e) {
 
 		}
@@ -63,6 +65,14 @@ const search = async () => {
 	$("#list").clearGridData();
 	let response = await requestApi('GET', '/open/rowspan');
 	$("#list").searchData(response.data, {});
+
+// 	$("#list").clearGridData();
+// 	let response = await requestApi('GET', '/open/rowspan');
+// 	for ( var i = 0 ; i <= response.data.length ; i++ ) {
+// 		$("#list").addRowData(i+1,response.data[i]);
+// 	}
+// 	$("#list").jqGrid('setFrozenColumns'); ///셀고정
+
 };
 
 
