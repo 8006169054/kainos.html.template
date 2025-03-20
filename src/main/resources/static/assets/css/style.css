@@ -763,7 +763,7 @@ select.form-control:not([size]):not([multiple]) {
   width: 100%;
   min-height: 70px;
   padding: 15px 25px;
-  display: flex;
+/*  정인선 버튼 우축정열 display: flex; */
   align-items: center;
 }
 .card .card-header .btn {

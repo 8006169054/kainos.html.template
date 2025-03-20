@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<!-- Default Layout Import-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/default/layout}" layout:fragment="Content">
+
+<script type="text/javascript">
+$('#daterange').datepicker();
+$('#daterange1').datepicker();
+$('#daterange2').datepicker();
+
+
+</script>
+
+
+<div class="main-content">
+	<section class="section">
+		<div class="section-header">
+			<h1>Cargo Release Creation</h1>
+			<div class="section-header-breadcrumb">
+				<div class="breadcrumb-item active">
+					<a href="/">Dashboard</a>
+				</div>
+				<div class="breadcrumb-item">KAINOS</div>
+				<div class="breadcrumb-item">Cargo Release Creation</div>
+			</div>
+		</div>
+
+		<div class="section-body">
+			<div class="row">
+				<div class="col-100">
+					<div class="card">
+						<div class="card-header text-right">
+							<button class="btn btn-primary mr-1">Search</button>
+							<button class="btn btn-success">Save</button>
+							<button class="btn btn-success">OK</button>
+							<button class="btn btn-info">New</button>
+							<button class="btn btn-danger">Delete</button>
+							<button class="btn btn-light">Close</button>
+							<button class="btn btn-light">Cancel</button>
+							<button class="btn btn-secondary">Clear</button>
+						</div>
+						<div class="card-body">
+							<div class="form-group row">
+								<label class="col-form-label text-md-left col-md-4">Dept</label>
+								<div class="col-md-10">
+									<select class="form-control selectric">
+				                        <option>Option 1</option>
+				                        <option>Option 2</option>
+				                        <option>Option 3</option>
+				                      </select>
+								</div>
+								<label class="col-form-label text-md-left col-md-8">Vessel/Voyage</label>
+								<div class="input-group col-md-15">
+									<input type="text" class="form-control">
+									<div class="input-group-append">
+										<div class="input-group-text">
+											<i class="fas fa-search"></i>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-10">
+									<select class="form-control selectric">
+										<option>All</option>
+										<option>Option 2</option>
+										<option>Option 3</option>
+									</select>
+								</div>
+								<label class="col-form-label text-md-left col-md-8">Customer</label>
+								<div class="input-group col-md-15">
+									<input type="text" class="form-control">
+									<div class="input-group-append">
+										<div class="input-group-text">
+											<i class="fas fa-search"></i>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-form-label text-md-left col-md-4">Agent</label>
+								<div class="col-md-10">
+									<input type="text" class="form-control">
+								</div>
+								<label class="col-form-label text-md-left col-md-8">Close Date</label>
+								<div class="col-md-15">
+									<div class="custom-control custom-radio custom-control-inline">
+										<input type="radio" id="customRadio1" name="customRadio" class="custom-control-input" checked="checked">
+										<label class="custom-control-label" for="customRadio1">Yes</label>
+									</div>
+									<div class="custom-control custom-radio custom-control-inline">
+										<input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
+										<label class="custom-control-label" for="customRadio2">No</label>
+									</div>
+								</div>
+								<div class="col-md-10"></div>
+								<label class="col-form-label text-md-left col-md-8">Receipt Date</label>
+								<div class="input-group date col-md-15" data-provide="datepicker">
+								    <input id="daterange" type="text" class="form-control">
+								    <div class="input-group-addon">
+								        <span class="glyphicon glyphicon-th"></span>
+								    </div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			
+			<div class="row">
+				<div class="col-100">
+					<div class="card">
+						<div class="card-header text-right">
+							<button class="btn btn-primary mr-1">Search</button>
+							<button class="btn btn-success">Save</button>
+							<button class="btn btn-success">OK</button>
+							<button class="btn btn-info">New</button>
+							<button class="btn btn-danger">Delete</button>
+							<button class="btn btn-light">Close</button>
+							<button class="btn btn-light">Cancel</button>
+							<button class="btn btn-secondary">Clear</button>
+						</div>
+						<div class="card-body">
+							<div class="form-group row">
+								<label class="col-form-label text-md-left col-md-4">Dept</label>
+								<div class="col-md-10">
+									<select class="form-control selectric">
+				                        <option>Option 1</option>
+				                        <option>Option 2</option>
+				                        <option>Option 3</option>
+				                      </select>
+								</div>
+								<label class="col-form-label text-md-left col-md-8">Vessel/Voyage</label>
+								<div class="input-group col-md-16">
+									<input type="text" class="form-control">
+									<div class="input-group-append-padding-right" style="cursor:pointer;">
+										<div class="input-group-text">
+											<i class="fas fa-search"></i>
+										</div>
+									</div>
+								</div>
+								<label class="col-form-label text-md-left col-md-7">Customer</label>
+								<div class="input-group col-md-16">
+									<input type="text" class="form-control">
+									<div class="input-group-append" style="cursor:pointer;">
+										<div class="input-group-text">
+											<i class="fas fa-search"></i>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-form-label text-md-left col-md-4">Agent</label>
+								<div class="col-md-10">
+									<input type="text" class="form-control">
+								</div>
+								<label class="col-form-label text-md-left col-md-8">Close Date</label>
+								<div class="input-group col-md-16">
+				                    <div class="custom-control custom-radio custom-control-inline">
+				                      	<input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input">
+				                      	<label class="custom-control-label" for="customRadioInline1">Yes</label>
+				                    </div>
+				                    <div class="custom-control custom-radio custom-control-inline">
+				                      	<input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input" checked="checked">
+				                      	<label class="custom-control-label" for="customRadioInline2">No</label>
+				                    </div>
+								</div>
+								<label class="col-form-label text-md-left col-md-7">Receipt Date</label>
+								<div class="input-group date col-md-9" style="padding-left: 0px;" data-provide="datepicker">
+								    <input id="daterange1" type="text" class="form-control" placeholder="from">
+								    <div class="input-group-addon">
+								        <span class="glyphicon glyphicon-th"></span>
+								    </div>
+								</div>
+								
+								<div class="input-group date col-md-9" style="padding-left: 0px;" data-provide="datepicker">
+								    <input id="daterange2" type="text" class="form-control" placeholder="to">
+								    <div class="input-group-addon">
+								        <span class="glyphicon glyphicon-th"></span>
+								    </div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</div>
+
+</html>

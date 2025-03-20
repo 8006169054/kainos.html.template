@@ -923,7 +923,7 @@ tr:first-child > td > .fc-day-grid-event {
   font-size: 13px;
   background-color: transparent;
   line-height: 44px;
-  min-height: 42px;
+  min-height: 40px;
 }
 .selectric .button {
   background-color: transparent;
