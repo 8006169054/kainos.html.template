@@ -4,15 +4,6 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layouts/default/layout}" layout:fragment="Content">
 
-<script type="text/javascript">
-$('#daterange').datepicker();
-$('#daterange1').datepicker();
-$('#daterange2').datepicker();
-
-
-</script>
-
-
 <div class="main-content">
 	<section class="section">
 		<div class="section-header">
@@ -94,11 +85,8 @@ $('#daterange2').datepicker();
 								</div>
 								<div class="col-md-10"></div>
 								<label class="col-form-label text-md-left col-md-8">Receipt Date</label>
-								<div class="input-group date col-md-15" data-provide="datepicker">
-								    <input id="daterange" type="text" class="form-control">
-								    <div class="input-group-addon">
-								        <span class="glyphicon glyphicon-th"></span>
-								    </div>
+								<div class="input-group col-md-15">
+									<input type="text" class="form-control datepicker">
 								</div>
 							</div>
 						</div>
@@ -154,32 +142,30 @@ $('#daterange2').datepicker();
 								<div class="col-md-10">
 									<input type="text" class="form-control">
 								</div>
-								<label class="col-form-label text-md-left col-md-8">Close Date</label>
+								<label class="col-form-label text-md-left col-md-8">Close
+									Date</label>
 								<div class="input-group col-md-16">
-				                    <div class="custom-control custom-radio custom-control-inline">
-				                      	<input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input">
-				                      	<label class="custom-control-label" for="customRadioInline1">Yes</label>
-				                    </div>
-				                    <div class="custom-control custom-radio custom-control-inline">
-				                      	<input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input" checked="checked">
-				                      	<label class="custom-control-label" for="customRadioInline2">No</label>
-				                    </div>
+									<div class="custom-control custom-radio custom-control-inline">
+										<input type="radio" id="customRadioInline1"
+											name="customRadioInline1" class="custom-control-input">
+										<label class="custom-control-label" for="customRadioInline1">Yes</label>
+									</div>
+									<div class="custom-control custom-radio custom-control-inline">
+										<input type="radio" id="customRadioInline2"
+											name="customRadioInline1" class="custom-control-input"
+											checked="checked"> <label
+											class="custom-control-label" for="customRadioInline2">No</label>
+									</div>
 								</div>
 								<label class="col-form-label text-md-left col-md-7">Receipt Date</label>
-								<div class="input-group date col-md-9" style="padding-left: 0px;" data-provide="datepicker">
-								    <input id="daterange1" type="text" class="form-control" placeholder="from">
-								    <div class="input-group-addon">
-								        <span class="glyphicon glyphicon-th"></span>
-								    </div>
+								<div class="input-group col-md-16">
+									<div class="input-group-prepend">
+										<div class="input-group-text">
+											<i class="fas fa-calendar"></i>
+										</div>
+									</div>
+									<input type="text" class="form-control daterange-cus">
 								</div>
-								
-								<div class="input-group date col-md-9" style="padding-left: 0px;" data-provide="datepicker">
-								    <input id="daterange2" type="text" class="form-control" placeholder="to">
-								    <div class="input-group-addon">
-								        <span class="glyphicon glyphicon-th"></span>
-								    </div>
-								</div>
-
 							</div>
 						</div>
 					</div>
@@ -188,5 +174,15 @@ $('#daterange2').datepicker();
 		</div>
 	</section>
 </div>
+
+<script type="text/javascript">
+
+$('.daterange-cus').daterangepicker({
+	  locale: {format: 'YYYY-MM-DD'},
+	  drops: 'down', // up
+	  opens: 'right'
+	});
+	
+</script>
 
 </html>
