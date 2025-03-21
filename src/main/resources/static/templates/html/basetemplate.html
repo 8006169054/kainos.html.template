@@ -94,12 +94,11 @@
 				</div>
 			</div>
 			
-			
 			<div class="row">
 				<div class="col-100">
 					<div class="card">
 						<div class="card-header text-right">
-							<button class="btn btn-primary mr-1">Search</button>
+							<button class="btn btn-primary">Search</button>
 							<button class="btn btn-success">Save</button>
 							<button class="btn btn-success">OK</button>
 							<button class="btn btn-info">New</button>
@@ -171,6 +170,28 @@
 					</div>
 				</div>
 			</div>
+			
+			<div class="row">
+				<div class="col-100">
+					<div class="card">
+						<div class="card-body">
+							<div class="form-group row">
+								<div class="col-md-100">
+									<button class="btn btn-success" onclick="alertMessage('저장 되었습니다.', 'success')">Success</button>
+									<button class="btn btn-success" onclick="alertMessage('확인 되었습니다.', 'success', 'OK')">OK</button>
+									<button class="btn btn-primary" onclick="alertMessage('info...', 'info')">Info</button>
+									<button class="btn btn-light" onclick="alertMessage('Warning...', 'warning')">Warning</button>
+									<button class="btn btn-danger" onclick="alertMessage('Error..', 'error')">Error</button>
+									<button class="btn btn-info" onclick="onClickConfirmMessage()">Confirm</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			
+			
 		</div>
 	</section>
 </div>
@@ -182,6 +203,14 @@ $('.daterange-cus').daterangepicker({
 	  drops: 'up', // down
 	  opens: 'right'
 	});
+
+function onClickConfirmMessage(){
+	confirmMessage('confirm Message', 'warning', 'Please selection', confirmMessageCallFn);
+}
+
+function confirmMessageCallFn(selection){
+	alert(selection);
+}
 
 </script>
 
