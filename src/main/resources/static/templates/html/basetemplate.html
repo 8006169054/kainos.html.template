@@ -4,6 +4,9 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layouts/default/layout}" layout:fragment="Content">
 
+<!-- 팝업 사용방법 -->
+<th:block th:replace="html/popup/sample-popup :: Popup"></th:block>
+
 <div class="main-content">
 	<section class="section">
 		<div class="section-header">
@@ -22,7 +25,7 @@
 				<div class="col-100">
 					<div class="card">
 						<div class="card-header text-right">
-							<button class="btn btn-primary mr-1">Search</button>
+							<button class="btn btn-primary">Search</button>
 							<button class="btn btn-success">Save</button>
 							<button class="btn btn-success">OK</button>
 							<button class="btn btn-info">New</button>
@@ -121,7 +124,7 @@
 								<div class="input-group col-md-16">
 									<input type="text" class="form-control">
 									<div class="input-group-append-padding-right">
-										<div class="input-group-text  btn">
+										<div class="input-group-text btn" data-toggle="modal" data-target="#exampleModal">
 											<i class="fas fa-search"></i>
 										</div>
 									</div>
@@ -183,6 +186,7 @@
 									<button class="btn btn-light" onclick="alertMessage('Warning...', 'warning')">Warning</button>
 									<button class="btn btn-danger" onclick="alertMessage('Error..', 'error')">Error</button>
 									<button class="btn btn-info" onclick="onClickConfirmMessage()">Confirm</button>
+									<button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Aw, yeah!</button>
 								</div>
 							</div>
 						</div>

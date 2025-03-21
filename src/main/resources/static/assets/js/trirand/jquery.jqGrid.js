@@ -6847,7 +6847,7 @@ $.jgrid.extend({
 				var k = 0, classes = $(t).jqGrid('getStyleUI',t.p.styleUI+".base",'rowBox', true, 'jqgrow ui-row-'+ t.p.direction) + " " + (addclass || ""), lcdata = {},
 				air = $.jgrid.isFunction(t.p.afterInsertRow) ? true : false;
 				if(ni) {
-					rnc = $(t).jqGrid('getStyleUI',t.p.styleUI+".base",'rownumBox', false, 'jqgrid-rownum');
+					rnc = $(t).jqGrid('getStyleUI',t.p.styleUI+".base",'', false, 'jqgrid-rownum');
 				}
 				if(gi) {
 					msc = $(t).jqGrid('getStyleUI',t.p.styleUI+".base",'multiBox', false, 'cbox');

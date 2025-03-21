@@ -1186,6 +1186,9 @@ pre code {
 .col-md-98 { -webkit-box-flex: 0; -ms-flex: 0 0 98.333333%; flex: 0 0 98.333333%; max-width: 98.333333%; }
 .col-md-99 { -webkit-box-flex: 0; -ms-flex: 0 0 99.333333%; flex: 0 0 99.333333%; max-width: 99.333333%; }
 .col-md-100 { -webkit-box-flex: 0; -ms-flex: 0 0 100.333333%; flex: 0 0 100.333333%; max-width: 100.333333%; }
+
+.col-md-margin-right-10 { margin-right: 10px;}
+
   .order-md-first {
     -webkit-box-ordinal-group: 0;
     -ms-flex-order: -1;

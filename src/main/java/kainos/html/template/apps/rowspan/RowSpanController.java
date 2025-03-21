@@ -19,6 +19,7 @@ import kainos.framework.core.servlet.KainosResponseEntity;
 import kainos.framework.core.support.excel.handler.KainosExcelWriteHandler;
 import kainos.framework.core.support.jqgrid.RowSpenHandler;
 import kainos.html.template.apps.rowspan.dto.RowSpanDto;
+import kainos.html.template.apps.rowspan.dto.SampleDto;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -75,6 +76,36 @@ public class RowSpanController {
 				.close();
 	}
 
+	@GetMapping(value = "/open/common-popup")
+	public ResponseEntity<List<SampleDto.CommonPopupDto>> fiendCommonPopup() throws Exception {
+		List<SampleDto.CommonPopupDto> datas = new ArrayList<>();
+		datas.add(SampleDto.CommonPopupDto.builder().code("A").name("AA").build());
+		datas.add(SampleDto.CommonPopupDto.builder().code("B").name("BB").build());
+		datas.add(SampleDto.CommonPopupDto.builder().code("C").name("CC").build());
+		datas.add(SampleDto.CommonPopupDto.builder().code("D").name("DD").build());
+		datas.add(SampleDto.CommonPopupDto.builder().code("E").name("EE").build());
+		datas.add(SampleDto.CommonPopupDto.builder().code("F").name("FF").build());
+		datas.add(SampleDto.CommonPopupDto.builder().code("G").name("GG").build());
+		datas.add(SampleDto.CommonPopupDto.builder().code("H").name("HH").build());
+		datas.add(SampleDto.CommonPopupDto.builder().code("I").name("II").build());
+		datas.add(SampleDto.CommonPopupDto.builder().code("G").name("GG").build());
+		datas.add(SampleDto.CommonPopupDto.builder().code("K").name("KK").build());
+		datas.add(SampleDto.CommonPopupDto.builder().code("L").name("LL").build());
+		datas.add(SampleDto.CommonPopupDto.builder().code("M").name("MM").build());
+		datas.add(SampleDto.CommonPopupDto.builder().code("N").name("NN").build());
+		datas.add(SampleDto.CommonPopupDto.builder().code("O").name("OO").build());
+		datas.add(SampleDto.CommonPopupDto.builder().code("P").name("PP").build());
+		datas.add(SampleDto.CommonPopupDto.builder().code("Q").name("QQ").build());
+		datas.add(SampleDto.CommonPopupDto.builder().code("R").name("RR").build());
+		datas.add(SampleDto.CommonPopupDto.builder().code("S").name("SS").build());
+		datas.add(SampleDto.CommonPopupDto.builder().code("T").name("TT").build());
+		
+		return KainosResponseEntity.builder().build()
+				.addData(datas)
+				.close();
+	}
+
+	
 	@GetMapping(value = "/open/exceldown")
 	public ResponseEntity<InputStreamResource> exceldown() throws Exception {
 		List<RowSpanDto> datas = new ArrayList<>();

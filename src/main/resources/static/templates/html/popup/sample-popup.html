@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<!--Thymeleaf, ConfigFragment 선언-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="Popup">
+
+<div class="modal fade" tabindex="-1" role="dialog" id="exampleModal">
+	<div class="modal-dialog" role="document" style="max-width: 40%;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Common Popup</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="col-100">
+					<div class="card p-0">
+						<div class="card-body">
+							<div class="form-group row">
+								<div class="col-md-20 col-md-margin-right-10">
+									<select class="form-control selectric">
+										<option>Option 1</option>
+										<option>Option 2</option>
+										<option>Option 3</option>
+									</select>
+								</div>
+								<div class="col-md-60 col-md-margin-right-10">
+									<input type="text" class="form-control">
+								</div>
+								<button class="btn btn-primary" onclick="search()">Search</button>
+							</div>
+						</div>
+						<div class="card-body p-0">
+							<div class="table-responsive" style="overflow : hidden">
+								<table id="list"></table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer bg-whitesmoke br">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary">OK</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+    $("#exampleModal").on("show.bs.modal", function(e) {
+    	console.log('show.bs.modal', $(e.relatedTarget).data);
+    });
+    
+    let colName = ['Code No.', 'Code Name'];
+    $(document).ready(function () {
+    	$("#list").jqGrid({
+    	   	datatype: "json",
+    	   	colNames: colName,
+    	   	colModel: [
+    	       	{ name: 'code', width: 200, 	align:'center', editable: false},
+    	       	{ name: 'name', width: 380, 	align:'center', editable: false}
+    	   	],
+    		height: 290, 
+    		rownumbers: true,
+    		autowidth:true,    // jQgrid width 자동100% 채워지게
+    	    shrinkToFit:false,  // width를 자동설정 해주는 기능
+    		width: '100%',
+    	  	multiselect: true,
+    	});
+    });
+    
+    const search = async () => {
+    	$("#list").clearGridData();
+    	let response = await requestApi('GET', '/open/common-popup');
+    	$("#list").searchData(response.data);
+    };
+    
+</script>
+</html>
