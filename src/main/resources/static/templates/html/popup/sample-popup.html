@@ -50,6 +50,10 @@
     	console.log('show.bs.modal', $(e.relatedTarget).data);
     });
     
+    $("#exampleModal").on("hide.bs.modal", function(e) {
+    	console.log('hide.bs.modal', $(e.relatedTarget).data);
+    });
+    
     let colName = ['Code No.', 'Code Name'];
     $(document).ready(function () {
     	$("#list").jqGrid({

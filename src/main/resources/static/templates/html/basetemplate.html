@@ -114,15 +114,15 @@
 							<div class="form-group row">
 								<label class="col-form-label text-md-left col-md-4">Dept</label>
 								<div class="col-md-10">
-									<select class="form-control selectric">
-				                        <option>Option 1</option>
-				                        <option>Option 2</option>
-				                        <option>Option 3</option>
+									<select class="form-control selectric" id="dept">
+				                        <option value="1">Option 1</option>
+				                        <option value="2">Option 2</option>
+				                        <option value="3">Option 3</option>
 				                      </select>
 								</div>
 								<label class="col-form-label text-md-left col-md-8">Vessel/Voyage</label>
 								<div class="input-group col-md-16">
-									<input type="text" class="form-control">
+									<input type="text" class="form-control" id="vessl">
 									<div class="input-group-append-padding-right">
 										<div class="input-group-text btn" data-toggle="modal" data-target="#exampleModal">
 											<i class="fas fa-search"></i>
@@ -201,6 +201,10 @@
 </div>
 
 <script type="text/javascript">
+const searchObject = {
+		dept : '2',
+		vessl: 'vessl123'
+}
 
 $('.daterange-cus').daterangepicker({
 	  locale: {format: 'YYYY-MM-DD'},
@@ -216,6 +220,10 @@ function confirmMessageCallFn(selection){
 	alert(selection);
 }
 
+/**
+ * 초기 데이터 바인딩
+ */
+dataBinding(searchObject);
 </script>
 
 </html>

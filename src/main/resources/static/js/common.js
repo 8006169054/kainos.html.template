@@ -1,8 +1,9 @@
 loding = async (type) => {
+	console.log('loding', type)
 	if(type)
-		$("#loading").show();
+		$(".loading-mask").css('display','');
 	else
-		$("#loading").hide();
+		$(".loading-mask").css('display','none');
 };
 
 /**
@@ -35,4 +36,11 @@ confirmMessage = async (message, type, title, callFn) => {
       else
       	callFn(false);
     });
+};
+
+dataBinding = async (bindingData, prefix = "") => {
+	var keys = Object.keys(bindingData);
+	$.each(keys, function(index, key) {
+		$("#" + prefix + key).val(bindingData[key]);
+	});
 };
