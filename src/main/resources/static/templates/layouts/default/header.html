@@ -7,6 +7,7 @@
       <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="fas fa-bars"></i></a></li>
       <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i class="fas fa-search"></i></a></li>
     </ul>
+    <!-- 
     <div class="search-element">
       <input class="form-control" type="search" placeholder="Search" aria-label="Search" data-width="250">
       <button class="btn" type="submit"><i class="fas fa-search"></i></button>
@@ -69,8 +70,26 @@
         </div>
       </div>
     </div>
+     -->
   </form>
   <ul class="navbar-nav navbar-right">
+	  <li class="dropdown">
+	  	<div class="dropdown d-inline">
+        	<button class="btn dropdown-toggle" type="button" id="language" data-toggle="dropdown" aria-haspopup="true" ria-expanded="false">
+        	</button>
+        	<script type="text/javascript">
+				var lang = getCookie('kainos-lang');
+				if(lang === 'en') languageText = '<img class="img-fluid" src="/modules/flag-icon-css/flags/4x3/um.svg" style="width: 15px;"> English';
+				else languageText = '<img class="img-fluid" src="/modules/flag-icon-css/flags/4x3/cn.svg" style="width: 15px;"> China';
+				$("#language").text('').append(languageText);
+			</script>
+         	<div class="dropdown-menu">
+           		<a class="dropdown-item has-icon" href="javascript:changeMultillanguage('en', true)"><img class="img-fluid" src="/modules/flag-icon-css/flags/4x3/um.svg" style="width: 15px;"> English</a>
+           		<a class="dropdown-item has-icon" href="javascript:changeMultillanguage('zh', true)"><img class="img-fluid" src="/modules/flag-icon-css/flags/4x3/cn.svg" style="width: 15px;"> China</a>
+         	</div>
+      	</div>
+	  </li>
+	  <!-- 
     <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link nav-link-lg message-toggle beep"><i class="far fa-envelope"></i></a>
       <div class="dropdown-menu dropdown-list dropdown-menu-right">
         <div class="dropdown-header">Messages
@@ -137,6 +156,8 @@
         </div>
       </div>
     </li>
+    -->
+    <!-- 
     <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg beep"><i class="far fa-bell"></i></a>
       <div class="dropdown-menu dropdown-list dropdown-menu-right">
         <div class="dropdown-header">Notifications
@@ -196,21 +217,22 @@
         </div>
       </div>
     </li>
+   -->
     <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-      <img alt="image" src="/assets/img/avatar/avatar-1.png" class="rounded-circle mr-1">
+<!--       <img alt="image" src="/assets/img/avatar/avatar-1.png" class="rounded-circle mr-1"> -->
       <div class="d-sm-none d-lg-inline-block">Hi, Ujang Maman</div></a>
       <div class="dropdown-menu dropdown-menu-right">
-        <div class="dropdown-title">Logged in 5 min ago</div>
-        <a href="features-profile.html" class="dropdown-item has-icon">
-          <i class="far fa-user"></i> Profile
-        </a>
-        <a href="features-activities.html" class="dropdown-item has-icon">
-          <i class="fas fa-bolt"></i> Activities
-        </a>
-        <a href="features-settings.html" class="dropdown-item has-icon">
-          <i class="fas fa-cog"></i> Settings
-        </a>
-        <div class="dropdown-divider"></div>
+<!--         <div class="dropdown-title">Logged in 5 min ago</div> -->
+<!--         <a href="features-profile.html" class="dropdown-item has-icon"> -->
+<!--           <i class="far fa-user"></i> Profile -->
+<!--         </a> -->
+<!--         <a href="features-activities.html" class="dropdown-item has-icon"> -->
+<!--           <i class="fas fa-bolt"></i> Activities -->
+<!--         </a> -->
+<!--         <a href="features-settings.html" class="dropdown-item has-icon"> -->
+<!--           <i class="fas fa-cog"></i> Settings -->
+<!--         </a> -->
+<!--         <div class="dropdown-divider"></div> -->
         <a href="#" class="dropdown-item has-icon text-danger">
           <i class="fas fa-sign-out-alt"></i> Logout
         </a>
@@ -218,4 +240,11 @@
     </li>
   </ul>
 </nav>
+
+<script type="text/javascript">
+function changeMultillanguage(language, reload){
+	setCookie('kainos-lang', language);
+ 	location.reload();
+}
+</script>
 </html>
