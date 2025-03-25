@@ -148,6 +148,7 @@ $(function() {
 
   var toggle_sidebar_mini = function(mini) {
     let body = $('body');
+    
     if(!mini) {
       body.removeClass('sidebar-mini');
       $(".main-sidebar").css({
@@ -164,7 +165,7 @@ $(function() {
       
       $(".main-sidebar .sidebar-menu > li").each(function() {
         let me = $(this);
-        if(me.find('.active').length){
+        if(me.hasClass('active')){
 			me.find('> .dropdown-menu').show();
 		}
       });
@@ -175,7 +176,6 @@ $(function() {
       sidebar_nicescroll = null;
       $(".main-sidebar .sidebar-menu > li").each(function() {
         let me = $(this);
-
         if(me.find('> .dropdown-menu').length) {
           me.find('> .dropdown-menu').hide();
           me.find('> .dropdown-menu').prepend('<li class="dropdown-title pt-3">'+ me.find('> a').text() +'</li>');
