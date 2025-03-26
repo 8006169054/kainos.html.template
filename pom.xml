@@ -188,9 +188,9 @@
 		<!--			<version>20241101</version>-->
 		<!--		</dependency>-->
 		<dependency>
-			<groupId>com</groupId>
-			<artifactId>kainos_framework_utils</artifactId>
-			<version>20240521</version>
+			<groupId>kainos.framework</groupId>
+			<artifactId>kainos.framework.utils</artifactId>
+			<version>20250325</version>
 		</dependency>
 
 		<dependency>

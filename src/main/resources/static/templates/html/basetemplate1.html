@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<!-- Default Layout Import-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/default/layout}" layout:fragment="Content">
+
+<!-- 팝업 사용방법 -->
+<th:block th:replace="html/popup/sample-popup :: Popup"></th:block>
+
+
+<script type="text/javascript">
+
+$(document).ready(function () {
+// 	, cellattr: arrtSetting
+$("#list").jqGrid({
+   	datatype: "json",
+   	colNames: ['jqFlag', '매출', '이월 매출', '체크박스', 'EDI & AN', 'INVOICE', 'PROFIT DATE', 'D/O RELEASE DATE', 'CNEE', 'CNEE EMAIL', '국내매출', '해외매출', 'Partner', 'Tank no.', 'POL', 'POD', 'TERMINAL CODE', 'Carrier', 'MBL NO.', 'HBL NO.', 'ETD', 'ETA', 'ATA', '비고'],
+   	colModel: [
+   		{ name: 'jqFlag', width: 70, 	align:'center'},
+       	{ name: 'a', width: 70, 	align:'center', editable: true, rowspan: true, frozen:true},
+       	{ name: 'b', width: 100, 	align:'center', editable: true, rowspan: true, frozen: true},
+       	{ name: 'c', width: 80, 	align:'center', formatter: 'checkbox',  editoptions:{value:'1:0'}, frozen: true },
+       	{ name: 'd', width: 100, 	align:'center', frozen: true},
+    	{ name: 'e', width: 80, 	align:'center', frozen: true},
+    	{ name: 'f', width: 120, 	align:'center', frozen: true},
+    	{ name: 'g', width: 150, 	align:'center'},
+    	{ name: 'h', width: 120, 	align:'center', editable: true, rowspan: true},
+    	{ name: 'i', width: 150, 	align:'center'},
+    	{ name: 'j', width: 100, 	align:'center', editable: true},
+    	{ name: 'k', width: 100, 	align:'center', editable: true},
+    	{ name: 'l', width: 100, 	align:'center', editable: true},
+    	{ name: 'm', width: 120, 	align:'center'},
+    	{ name: 'n', width: 100, 	align:'center'},
+    	{ name: 'o', width: 100, 	align:'center'},
+    	{ name: 'p', width: 140, 	align:'center'},
+    	{ name: 'q', width: 100, 	align:'center'},
+    	{ name: 'r', width: 140, 	align:'center'},
+    	{ name: 's', width: 140, 	align:'center'},
+    	{ name: 't', width: 100, 	align:'center', rowspan: true},
+    	{ name: 'u', width: 100, 	align:'center'},
+    	{ name: 'v', width: 100, 	align:'center'},
+       	{ name: 'w', width: 250, 	align:'center', rowspan: true}
+   	],
+	height: 290, 
+	width: '100%',
+	multiselect: true,
+    cellEdit : true
+//  	dblEdit : true,
+//	emptyrecords:'데이터가 없습니다.'
+});
+
+});
+
+async function search(){
+	$("#list").clearGridData();
+	let response = await requestApi('GET', '/open/rowspan');
+	// 셀고정 옵션 
+	$("#list").searchData(response.data, {frozen:true});
+};
+
+</script>
+
+<div class="main-content">
+	<section class="section">
+		<div class="section-header">
+			<h1>Cargo Release Creation</h1>
+			<div class="section-header-breadcrumb">
+				<div class="breadcrumb-item active">
+					<a href="/">Dashboard</a>
+				</div>
+				<div class="breadcrumb-item">KAINOS</div>
+				<div class="breadcrumb-item">Cargo Release Creation</div>
+			</div>
+		</div>
+
+		<div class="section-body">
+			<div class="row">
+				<div class="col-100">
+					<div class="card">
+						<div class="card-header text-right">
+							<button class="btn btn-primary" onclick="search()">Search</button>
+							<button class="btn btn-success">Save</button>
+							<button class="btn btn-success">OK</button>
+							<button class="btn btn-info">New</button>
+							<button class="btn btn-danger">Delete</button>
+							<button class="btn btn-light">Close</button>
+							<button class="btn btn-light">Cancel</button>
+							<button class="btn btn-secondary">Clear</button>
+						</div>
+						<div class="card-body">
+							<div class="form-group row">
+								<label th:text="#{basetemplate.label.dept}" class="col-form-label text-md-left col-md-4"></label>
+								<div class="col-md-10">
+									<select class="form-control selectric">
+				                        <option>Option 1</option>
+				                        <option>Option 2</option>
+				                        <option>Option 3</option>
+				                      </select>
+								</div>
+								<label class="col-form-label text-md-left col-md-8">Vessel/Voyage</label>
+								<div class="input-group col-md-15">
+									<input type="text" class="form-control">
+									<div class="input-group-append">
+										<div class="input-group-text btn">
+											<i class="fas fa-search"></i>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-10">
+									<select class="form-control selectric">
+										<option>All</option>
+										<option>Option 2</option>
+										<option>Option 3</option>
+									</select>
+								</div>
+								<label class="col-form-label text-md-left col-md-8">Customer</label>
+								<div class="input-group col-md-15">
+									<input type="text" class="form-control">
+									<div class="input-group-append">
+										<div class="input-group-text btn">
+											<i class="fas fa-search"></i>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-form-label text-md-left col-md-4">Agent</label>
+								<div class="col-md-10">
+									<input type="text" class="form-control">
+								</div>
+								<label class="col-form-label text-md-left col-md-8">Close Date</label>
+								<div class="col-md-15">
+									<div class="custom-control custom-radio custom-control-inline">
+										<input type="radio" id="customRadio1" name="customRadio" class="custom-control-input" checked="checked">
+										<label class="custom-control-label" for="customRadio1">Yes</label>
+									</div>
+									<div class="custom-control custom-radio custom-control-inline">
+										<input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
+										<label class="custom-control-label" for="customRadio2">No</label>
+									</div>
+								</div>
+								<div class="col-md-10"></div>
+								<label class="col-form-label text-md-left col-md-8">Receipt Date</label>
+								<div class="input-group col-md-15">
+									<input type="text" class="form-control datepicker">
+								</div>
+							</div>
+					
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-100">
+					<div class="card">
+						<div class="card-header text-right">
+							<button class="btn btn-success">ADD</button>
+							<button class="btn btn-danger">Delete</button>
+						</div>
+						<div class="card-body p-0">
+							<div class="table-responsive" style="overflow: hidden">
+								<table id="list"></table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</div>
+
+<script type="text/javascript">
+const searchObject = {
+		dept : '2',
+		vessl: 'vessl123'
+}
+
+$('.daterange-cus').daterangepicker({
+	  locale: {format: 'YYYY-MM-DD'},
+	  drops: 'up', // down
+	  opens: 'right'
+	});
+
+function onClickConfirmMessage(){
+	confirmMessage('confirm Message', 'warning', 'Please selection', confirmMessageCallFn);
+}
+
+function confirmMessageCallFn(selection){
+	alert(selection);
+}
+
+/**
+ * 초기 데이터 바인딩
+ */
+dataBinding(searchObject);
+
+</script>
+
+</html>
