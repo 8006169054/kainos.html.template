@@ -41,7 +41,7 @@
 .ui-jqgrid .ui-jqgrid-htable {table-layout:fixed;margin:0;border-collapse: separate;}
 .ui-jqgrid .ui-jqgrid-htable th { height: 27px; padding: 0 2px 0 2px;}
 .ui-jqgrid .ui-jqgrid-htable th div {overflow: hidden; position:relative;margin: .1em 0em .1em 0em;}
-.ui-th-column, .ui-jqgrid .ui-jqgrid-htable th.ui-th-column {overflow: hidden;white-space: nowrap;text-align:center;border-top : 0 none;border-bottom : 0 none;}
+.ui-th-column, .ui-jqgrid .ui-jqgrid-htable th.ui-th-column {overflow: hidden;white-space: nowrap;text-align:center;border-top : 0 none; /*border-bottom : 0 none;*/}
 .ui-th-column-header, .ui-jqgrid .ui-jqgrid-htable th.ui-th-column-header {overflow: hidden;white-space: nowrap;text-align:center;border-top : 0 none; height: 26px;}
 .ui-th-ltr, .ui-jqgrid .ui-jqgrid-htable th.ui-th-ltr {border-left : 0 none;}
 .ui-th-rtl, .ui-jqgrid .ui-jqgrid-htable th.ui-th-rtl {border-right : 0 none;}
@@ -64,6 +64,7 @@
 .ui-jqgrid tr.ui-search-toolbar select {}
 /* body */ 
 .ui-jqgrid .ui-jqgrid-bdiv {position: relative; margin: 0; padding:0; overflow: auto; text-align:left;z-index: 101;}
+.ui-jqgrid .ui-jqgrid-bdiv > div { width: fit-content; }
 .ui-jqgrid .ui-jqgrid-btable {table-layout:fixed; margin:0; outline-style: none; border-collapse: separate;}
 .ui-jqgrid tr.jqgrow,
 .ui-jqgrid tr.jqgroup 
@@ -429,8 +430,8 @@ a.g-menu-item, a.soptclass, a.clearsearchclass { cursor: pointer; }
 	display:inline-block;
 }
 .ui-jqgrid .ui-jqgrid-htable .ui-th-div {
-	height:30px; /* 정인선 17 */
-	margin-top:10px; /* 정인선 5 */
+	height:17px; /* 정인선 17 */
+	margin-top:5px; /* 정인선 5 */
 }
 th.jqgrid-multibox .ui-th-div {
 	margin-top:2px !important;
