@@ -30,8 +30,8 @@ public class RowSpanController {
 	
 	@PostMapping(value = "/open/reuqestbodyexceldown")
 	public ResponseEntity<InputStreamResource> insertsReuqestBody(@RequestBody List<RowSpanDto> reupestBodyList) throws Exception {
+		handler.GenerationRowSpen(reupestBodyList, RowSpanDto.class);
 		byte[] downLoadFile = null;
-		
 		KainosExcelWriteHandler excelWriteHandler = KainosExcelWriteHandler.builder().startRowNum(1)
 				.templateFile("excel/sample-rowsanp.xlsx") // 템플릿 파일 경로
 				.build();

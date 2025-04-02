@@ -196,8 +196,9 @@
 		<dependency>
 			<groupId>kainos.framework</groupId>
 			<artifactId>kainos.framework.core</artifactId>
-			<version>20250325</version>
+			<version>20250402</version>
 		</dependency>
+
 	</dependencies>
 
 	<build>

@@ -59,7 +59,7 @@ public class RowSpanDto {
 	private String v;
 	@Field(value = "W", merge = true)
 	private String w;
-	@Builder.Default
+	@Builder.Default /* 필드명을 rowspan 해야 함 필수 */
 	private RowSpanOtion rowspan = RowSpanOtion.builder().build();
 	
 	@Data
