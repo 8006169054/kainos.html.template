@@ -6642,15 +6642,17 @@ $.jgrid.extend({
 						res = res = $.extend( {}, $t.p.data[ $t.p._index[ $.jgrid.stripPref($t.p.idPrefix, ind.id) ] ] );
 					} else {
 						$(ind).children('td[role="gridcell"]').each( function(i) {
-							nm = $t.p.colModel[i].name;
-							if ( !$.jgrid.isServiceCol( nm ) ) {
-								if($t.p.treeGrid===true && nm === $t.p.ExpandColumn) {
-									res[nm] = $.jgrid.htmlDecode( $(this).find("span").first().html() );
-								} else {
-									try {
-										res[nm] = $.unformat.call($t,this,{rowId:ind.id, colModel:$t.p.colModel[i]},i);
-									} catch (e){
-										res[nm] = $.jgrid.htmlDecode($(this).html());
+							if($t.p.colModel[i] != undefined ){
+								nm = $t.p.colModel[i].name;
+								if ( !$.jgrid.isServiceCol( nm ) ) {
+									if($t.p.treeGrid===true && nm === $t.p.ExpandColumn) {
+										res[nm] = $.jgrid.htmlDecode( $(this).find("span").first().html() );
+									} else {
+										try {
+											res[nm] = $.unformat.call($t,this,{rowId:ind.id, colModel:$t.p.colModel[i]},i);
+										} catch (e){
+											res[nm] = $.jgrid.htmlDecode($(this).html());
+										}
 									}
 								}
 							}
