@@ -6888,6 +6888,7 @@ $.jgrid.extend({
 						prp = t.formatCol(i,1,v, data, rowid, lcdata);
 						row[row.length] = "<td role=\"gridcell\" "+prp+">"+v+"</td>";
 					}
+					row[row.length] = "<td role=\"gridcell\" "+"style='height:0px;width:100%;'"+"></td>";
 					row.unshift( t.constructTr(rowid, false, classes, lcdata, data ) );
 					row[row.length] = "</tr>";
 					if(t.rows.length === 0){
